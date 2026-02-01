@@ -137,6 +137,37 @@
         }
 
         @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+
+        .party-hat {
+    position: absolute;
+    width: 60px; /* To hơn chút cho cân với chữ */
+    height: 70px;
+    background: #333; /* Màu nón đen */
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%); /* Tạo hình tam giác */
+    top: -100px; /* Giấu trên trời */
+    left: 70%; /* Căn lệch phải chỗ chữ 'y' */
+    opacity: 0;
+    transition: all 1.2s cubic-bezier(0.17, 0.67, 0.83, 0.67);
+    z-index: 20;
+}
+
+/* Thêm cái chóp nón và chấm bi */
+.party-hat::after {
+    content: '●';
+    color: #ff4081;
+    position: absolute;
+    bottom: 5px;
+    left: 10px;
+    font-size: 10px;
+    text-shadow: 20px 0 #ff4081, 10px -15px #ff4081;
+}
+
+.party-hat.fall {
+    opacity: 1;
+    top: -30px; /* Rơi xuống đậu trên chữ Happy */
+    transform: rotate(15deg);
+}
+    
     </style>
 </head>
 <body>
@@ -149,12 +180,13 @@
         <div class="text-hint">Nhấn để mở món quà</div>
     </div>
 
-    <div id="screen-2">
+   <div id="screen-2">
     <div class="hb-wrapper">
         <div class="hb-line white-text" id="happy-text">Happy</div>
-        <div class="hb-line yellow-text" id="birthday-text">Birthday</div>
+        <div class="party-hat" id="hat"></div> <div class="hb-line yellow-text" id="birthday-text">Birthday</div>
     </div>
-    </div>
+</div>
+
 
     <script>
         function startTransition() {
@@ -170,6 +202,10 @@
         // Gọi hiệu ứng cho từng dòng
         animateLetters('happy-text', 0);
         animateLetters('birthday-text', 500); // Dòng 2 trễ hơn 0.5s
+                // Cho nón rơi sau khi chữ nhảy xong
+        setTimeout(() => {
+            document.getElementById('hat').classList.add('fall');
+        }, 1500); 
     }, 800);
 }
 

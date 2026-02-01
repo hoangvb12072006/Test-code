@@ -1,0 +1,358 @@
+body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #fffacd; /* Màu nền vàng nhạt */
+    overflow: hidden; /* Ngăn cuộn trang */
+}
+
+.container {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* --- Gift Page --- */
+.gift-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    text-align: center;
+}
+
+.gift-box {
+    width: 120px;
+    height: 100px;
+    background-color: #ffda44; /* Vàng quà */
+    border: 2px solid #e0b600;
+    position: relative;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.gift-box::before {
+    content: '';
+    position: absolute;
+    width: 40px;
+    height: 100%;
+    background-color: #d12222; /* Dây ruy băng dọc */
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.gift-box::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 30px;
+    background-color: #d12222; /* Dây ruy băng ngang */
+    top: 35px;
+}
+
+/* Nơ trên hộp quà */
+.gift-box::before {
+    content: '';
+    position: absolute;
+    width: 40px;
+    height: 100%;
+    background-color: #d12222; /* Dây ruy băng dọc */
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1;
+}
+
+.gift-box::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 30px;
+    background-color: #d12222; /* Dây ruy băng ngang */
+    top: 35px;
+    z-index: 1;
+}
+
+/* Thêm ruy băng trên cùng */
+.gift-box {
+    /* ... các style cũ ... */
+    overflow: visible; /* Cho phép nơ hiển thị bên ngoài */
+}
+
+.gift-box::before { /* Ruy băng dọc */
+    /* ... các style cũ ... */
+}
+
+.gift-box::after { /* Ruy băng ngang */
+    /* ... các style cũ ... */
+}
+
+.gift-box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+}
+
+.click-text {
+    margin-top: 20px;
+    font-family: 'Dancing Script', cursive; /* Hoặc font chữ bay bổng khác */
+    font-size: 1.5em;
+    color: #d12222;
+}
+
+/* --- Birthday Page --- */
+.birthday-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #fffacd;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    position: relative; /* Để các hiệu ứng bay nhảy dễ hơn */
+    width: 90%;
+    max-width: 400px;
+    height: 90vh; /* Chiếm gần hết chiều cao màn hình */
+    justify-content: space-around;
+}
+
+.happy-birthday {
+    font-family: 'Impact', sans-serif; /* Font chữ lớn, nổi bật */
+    font-size: 3em;
+    color: #333;
+    -webkit-text-stroke: 2px #fff; /* Viền chữ */
+    text-stroke: 2px #fff;
+    letter-spacing: 3px;
+    margin-bottom: 20px;
+    position: relative;
+    animation: bounceIn 1s ease-out; /* Hiệu ứng xuất hiện */
+}
+
+@keyframes bounceIn {
+    0% { transform: scale(0.5); opacity: 0; }
+    70% { transform: scale(1.1); opacity: 1; }
+    100% { transform: scale(1); }
+}
+
+.profile-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.profile-pic {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 5px solid #ffda44;
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    margin-bottom: 20px;
+}
+
+.profile-pic img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.name-tag {
+    background-color: #ffda44;
+    color: #333;
+    padding: 10px 30px;
+    border-radius: 50px;
+    font-weight: bold;
+    font-size: 1.2em;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+}
+
+.open-letter-btn {
+    background-color: #ffda44;
+    color: #333;
+    border: none;
+    padding: 15px 40px;
+    font-size: 1.2em;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
+}
+
+.open-letter-btn:hover {
+    background-color: #e0b600;
+    transform: translateY(-3px);
+}
+
+/* Thêm các hiệu ứng trang trí như hoa và ngôi sao */
+.flower {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    background-image: url('https://i.ibb.co/3k5fS4j/flower.png'); /* Thay bằng link ảnh hoa của bạn */
+    background-size: cover;
+    animation: floatFlower 10s infinite ease-in-out;
+    opacity: 0.8;
+}
+
+.star {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-image: url('https://i.ibb.co/CBy12Q7/star.png'); /* Thay bằng link ảnh ngôi sao của bạn */
+    background-size: cover;
+    animation: twinkleStar 5s infinite ease-in-out alternate;
+    opacity: 0.7;
+}
+
+/* Vị trí ngẫu nhiên cho hoa và ngôi sao */
+.flower:nth-child(1) { top: 10%; left: 5%; animation-delay: 0s; }
+.flower:nth-child(2) { top: 20%; right: 15%; animation-delay: 2s; }
+.flower:nth-child(3) { bottom: 5%; left: 20%; animation-delay: 4s; }
+.star:nth-child(4) { top: 30%; left: 30%; animation-delay: 1s; }
+.star:nth-child(5) { bottom: 10%; right: 5%; animation-delay: 3s; }
+.flower:nth-child(6) { top: 5%; right: 5%; animation-delay: 5s; }
+
+
+@keyframes floatFlower {
+    0% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-10px) rotate(10deg); }
+    100% { transform: translateY(0) rotate(0deg); }
+}
+
+@keyframes twinkleStar {
+    0% { transform: scale(0.8); opacity: 0.5; }
+    50% { transform: scale(1.2); opacity: 1; }
+    100% { transform: scale(0.8); opacity: 0.5; }
+}
+
+
+/* --- Letter Modal --- */
+.letter-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.letter-content {
+    background-color: #fff8dc; /* Màu giấy thư */
+    border: 5px solid #ffda44; /* Viền thư */
+    padding: 30px;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 450px;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    background-image: url('https://i.ibb.co/3d6V2gQ/checkered-pattern.png'); /* Thay bằng link ảnh lưới của bạn */
+    background-size: 20px 20px;
+    background-blend-mode: overlay; /* Để lưới không quá nổi bật */
+}
+
+.close-btn {
+    position: absolute;
+    top: 15px;
+    right: 25px;
+    font-size: 2em;
+    font-weight: bold;
+    color: #888;
+    cursor: pointer;
+}
+
+.close-btn:hover {
+    color: #333;
+}
+
+.letter-heading {
+    font-family: 'Dancing Script', cursive; /* Font chữ bay bổng */
+    font-size: 2.2em;
+    color: #8b4513; /* Nâu đất */
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.letter-text p {
+    font-family: 'Georgia', serif; /* Font chữ dễ đọc cho thư */
+    font-size: 1.1em;
+    line-height: 1.6;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.cute-bear {
+    width: 80px;
+    height: 80px;
+    background-image: url('https://i.ibb.co/m00zX03/bears.png'); /* Thay bằng link ảnh gấu của bạn */
+    background-size: cover;
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+}
+
+/* Floating Images in Letter */
+.floating-images {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none; /* Cho phép click xuyên qua ảnh */
+    overflow: hidden; /* Ngăn ảnh tràn ra ngoài */
+    z-index: 5;
+}
+
+.floating-images img {
+    position: absolute;
+    width: 80px; /* Kích thước ảnh nhỏ */
+    height: 80px;
+    object-fit: cover;
+    border-radius: 10px;
+    border: 3px solid #fff;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    animation: floatAndRotate 15s infinite ease-in-out alternate;
+}
+
+@keyframes floatAndRotate {
+    0% { transform: translate(0, 0) rotate(0deg); }
+    25% { transform: translate(20px, -20px) rotate(10deg); }
+    50% { transform: translate(0, 20px) rotate(-10deg); }
+    75% { transform: translate(-20px, -10px) rotate(5deg); }
+    100% { transform: translate(0, 0) rotate(0deg); }
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+    .happy-birthday {
+        font-size: 2.5em;
+    }
+    .profile-pic {
+        width: 150px;
+        height: 150px;
+    }
+    .letter-content {
+        padding: 20px;
+    }
+    .letter-heading {
+        font-size: 1.8em;
+    }
+    .letter-text p {
+        font-size: 1em;
+    }
+}

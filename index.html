@@ -6,19 +6,27 @@
     <title>Hộp Quà Sinh Nhật</title>
     <style>
 
-        .hb-wrapper {
+    .hb-wrapper {
     position: absolute;
-    top: 5vh; /* Đẩy lên trên cùng */
+    top: 5vh; 
+    left: 50%; /* Đưa khung về giữa theo trục X */
+    transform: translateX(-50%); /* Dịch ngược lại 50% để cân bằng */
     width: 100%;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Đảm bảo các dòng con cũng vào giữa */
 }
+
 .hb-line {
     font-family: 'Arial Black', sans-serif;
     font-size: 3.5rem;
     line-height: 1.1;
     display: flex;
-    justify-content: center;
+    justify-content: center; /* Căn giữa các chữ cái trong dòng */
+    width: 100%;
 }
+
 /* Chữ trắng viền đen dày */
 .white-text .letter { 
     color: white; 

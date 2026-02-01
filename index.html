@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hộp Quà Sinh Nhật</title>
     <style>
-        /* Nền vàng nhạt caro giống video */
+        /* Nền vàng nhạt caro chuẩn video */
         body {
             margin: 0;
             display: flex;
@@ -20,55 +20,47 @@
             overflow: hidden;
         }
 
-        /* Container hộp quà */
-        .gift-container {
+        /* MÀN HÌNH 1: HỘP QUÀ */
+        #screen-1 {
             display: flex;
             flex-direction: column;
             align-items: center;
             cursor: pointer;
-            transition: transform 0.3s ease;
+            transition: all 0.5s ease;
         }
 
-        .gift-container:hover {
-            transform: scale(1.05);
-        }
-
-        /* Vẽ hộp quà bằng CSS thuần */
         .gift-box {
             width: 150px;
             height: 150px;
-            background: #E67E22; /* Màu cam đậm của hộp */
+            background: #E67E22;
             position: relative;
             border-radius: 10px;
             box-shadow: 0 15px 30px rgba(0,0,0,0.1);
             animation: bounce 2s infinite;
         }
 
-        /* Nắp hộp */
         .gift-box::before {
             content: '';
             position: absolute;
             width: 170px;
             height: 40px;
-            background: #F39C12; /* Màu nắp sáng hơn */
+            background: #F39C12;
             top: -10px;
             left: -10px;
             border-radius: 5px;
             z-index: 2;
         }
 
-        /* Dây ruy băng dọc */
         .ribbon-v {
             position: absolute;
             width: 30px;
             height: 100%;
-            background: #C0392B; /* Màu đỏ ruy băng */
+            background: #C0392B;
             left: 50%;
             transform: translateX(-50%);
             z-index: 3;
         }
 
-        /* Nơ trên đỉnh */
         .bow {
             position: absolute;
             top: -45px;
@@ -95,33 +87,31 @@
             transform: rotate(-45deg);
         }
 
-        /* Dòng chữ yêu cầu nhấn */
         .text-hint {
             margin-top: 40px;
             color: #C0392B;
             font-size: 1.5rem;
             font-style: italic;
             font-family: 'Times New Roman', serif;
-            letter-spacing: 1px;
             animation: pulse 1.5s infinite;
         }
 
-        /* Hiệu ứng nảy hộp quà */
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-15px); }
+        /* MÀN HÌNH 2 (Tạm thời ẩn) */
+        #screen-2 {
+            display: none;
+            text-align: center;
+            animation: fadeIn 1s forwards;
         }
 
-        @keyframes pulse {
-            0% { opacity: 0.6; }
-            50% { opacity: 1; }
-            100% { opacity: 0.6; }
-        }
+        /* Animations */
+        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+        @keyframes pulse { 0% { opacity: 0.6; } 50% { opacity: 1; } 100% { opacity: 0.6; } }
+        @keyframes fadeIn { from { opacity: 0; transform: scale(0.8); } to { opacity: 1; transform: scale(1); } }
     </style>
 </head>
 <body>
 
-    <div class="gift-container" onclick="nextStep()">
+    <div id="screen-1" onclick="nextStep()">
         <div class="gift-box">
             <div class="bow"></div>
             <div class="ribbon-v"></div>
@@ -129,10 +119,16 @@
         <div class="text-hint">Nhấn để mở món quà</div>
     </div>
 
+    <div id="screen-2">
+        <h1 style="font-size: 3rem; color: #333;">Happy Birthday! 🎂</h1>
+        <p>Đang chuẩn bị nội dung tiếp theo...</p>
+    </div>
+
     <script>
         function nextStep() {
-            // Hiệu ứng khi nhấn vào (tạm thời log ra, bạn có thể nối vào code màn hình sau)
-            alert("Món quà đang mở ra...");
+            // Xóa màn 1 và hiện màn 2 ngay lập tức, không thông báo!
+            document.getElementById('screen-1').style.display = 'none';
+            document.getElementById('screen-2').style.display = 'block';
         }
     </script>
 </body>

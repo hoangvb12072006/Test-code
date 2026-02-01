@@ -138,17 +138,39 @@
 
         @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
 
-        .party-hat {
+   .party-hat {
     position: absolute;
-    width: 60px; /* To hơn chút cho cân với chữ */
-    height: 70px;
-    background: #333; /* Màu nón đen */
-    clip-path: polygon(50% 0%, 0% 100%, 100% 100%); /* Tạo hình tam giác */
-    top: -100px; /* Giấu trên trời */
-    left: 70%; /* Căn lệch phải chỗ chữ 'y' */
+    width: 0;
+    height: 0;
+    /* Thu nhỏ kích thước nón lại */
+    border-left: 10px solid transparent; 
+    border-right: 10px solid transparent;
+    border-bottom: 25px solid #333; 
+    
+    top: -100px; 
+    /* Căn chỉnh lại để nó rơi trúng chữ 'y' */
+    left: calc(50% + 55px); 
+    z-index: 100;
     opacity: 0;
-    transition: all 1.2s cubic-bezier(0.17, 0.67, 0.83, 0.67);
-    z-index: 20;
+    transition: all 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Chấm bi nhỏ lại cho tinh tế */
+.party-hat::after {
+    content: '●';
+    font-size: 6px;
+    color: #ff4081;
+    position: absolute;
+    top: 12px;
+    left: -3px;
+    text-shadow: 6px 5px #ff4081, 0px 8px #ff4081;
+}
+
+/* Vị trí đậu chuẩn trên đầu chữ 'y' */
+.party-hat.fall {
+    opacity: 1;
+    top: -18px; /* Đẩy lên một chút để không đè nát chữ */
+    transform: rotate(15deg);
 }
 
 /* Thêm cái chóp nón và chấm bi */

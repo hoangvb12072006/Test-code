@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hộp Quà Sinh Nhật</title>
     <style>
-        /* Nền vàng nhạt caro chuẩn video */
         body {
             margin: 0;
             display: flex;
@@ -26,7 +25,7 @@
             flex-direction: column;
             align-items: center;
             cursor: pointer;
-            transition: all 0.5s ease;
+            transition: opacity 0.8s ease, transform 0.8s ease; /* Hiệu ứng làm mờ */
         }
 
         .gift-box {
@@ -40,78 +39,61 @@
         }
 
         .gift-box::before {
-            content: '';
-            position: absolute;
-            width: 170px;
-            height: 40px;
-            background: #F39C12;
-            top: -10px;
-            left: -10px;
-            border-radius: 5px;
-            z-index: 2;
+            content: ''; position: absolute; width: 170px; height: 40px;
+            background: #F39C12; top: -10px; left: -10px; border-radius: 5px; z-index: 2;
         }
 
         .ribbon-v {
-            position: absolute;
-            width: 30px;
-            height: 100%;
-            background: #C0392B;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 3;
+            position: absolute; width: 30px; height: 100%;
+            background: #C0392B; left: 50%; transform: translateX(-50%); z-index: 3;
         }
 
         .bow {
-            position: absolute;
-            top: -45px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 60px;
-            height: 40px;
-            z-index: 4;
+            position: absolute; top: -45px; left: 50%; transform: translateX(-50%);
+            width: 60px; height: 40px; z-index: 4;
         }
 
         .bow::before, .bow::after {
-            content: '';
-            position: absolute;
-            width: 35px;
-            height: 35px;
-            border: 8px solid #C0392B;
-            border-radius: 50% 50% 0 50%;
-            transform: rotate(45deg);
+            content: ''; position: absolute; width: 35px; height: 35px;
+            border: 8px solid #C0392B; border-radius: 50% 50% 0 50%; transform: rotate(45deg);
         }
 
-        .bow::after {
-            left: 25px;
-            border-radius: 50% 50% 50% 0;
-            transform: rotate(-45deg);
-        }
+        .bow::after { left: 25px; border-radius: 50% 50% 50% 0; transform: rotate(-45deg); }
 
         .text-hint {
-            margin-top: 40px;
-            color: #C0392B;
-            font-size: 1.5rem;
-            font-style: italic;
-            font-family: 'Times New Roman', serif;
-            animation: pulse 1.5s infinite;
+            margin-top: 40px; color: #C0392B; font-size: 1.5rem;
+            font-style: italic; font-family: 'Times New Roman', serif;
         }
 
-        /* MÀN HÌNH 2 (Tạm thời ẩn) */
+        /* MÀN HÌNH 2: HAPPY BIRTHDAY */
         #screen-2 {
             display: none;
             text-align: center;
-            animation: fadeIn 1s forwards;
+            opacity: 0;
+            transition: opacity 1.5s ease;
         }
 
-        /* Animations */
+        .hb-title {
+            font-size: 4rem;
+            font-weight: bold;
+            color: #333;
+            -webkit-text-stroke: 2px white;
+            text-shadow: 3px 3px 0px #FFD54F;
+            margin: 0;
+        }
+
+        /* Lớp phủ làm mờ khi biến mất */
+        .fade-out {
+            opacity: 0 !important;
+            transform: scale(0.9);
+        }
+
         @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
-        @keyframes pulse { 0% { opacity: 0.6; } 50% { opacity: 1; } 100% { opacity: 0.6; } }
-        @keyframes fadeIn { from { opacity: 0; transform: scale(0.8); } to { opacity: 1; transform: scale(1); } }
     </style>
 </head>
 <body>
 
-    <div id="screen-1" onclick="nextStep()">
+    <div id="screen-1" onclick="startTransition()">
         <div class="gift-box">
             <div class="bow"></div>
             <div class="ribbon-v"></div>
@@ -120,15 +102,28 @@
     </div>
 
     <div id="screen-2">
-        <h1 style="font-size: 3rem; color: #333;">Happy Birthday! 🎂</h1>
-        <p>Đang chuẩn bị nội dung tiếp theo...</p>
+        <h1 class="hb-title">Happy Birthday</h1>
+        <p style="color: #666;">Đang tải điều bất ngờ...</p>
     </div>
 
     <script>
-        function nextStep() {
-            // Xóa màn 1 và hiện màn 2 ngay lập tức, không thông báo!
-            document.getElementById('screen-1').style.display = 'none';
-            document.getElementById('screen-2').style.display = 'block';
+        function startTransition() {
+            const s1 = document.getElementById('screen-1');
+            const s2 = document.getElementById('screen-2');
+
+            // Bước 1: Làm mờ màn hình 1
+            s1.classList.add('fade-out');
+
+            // Bước 2: Chờ hiệu ứng mờ kết thúc (800ms) rồi đổi màn hình
+            setTimeout(() => {
+                s1.style.display = 'none';
+                s2.style.display = 'block';
+                
+                // Bước 3: Cho chữ Happy Birthday hiện lên từ từ
+                setTimeout(() => {
+                    s2.style.opacity = '1';
+                }, 100);
+            }, 800);
         }
     </script>
 </body>

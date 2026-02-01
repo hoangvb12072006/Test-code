@@ -2,145 +2,137 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <title>Chúc Mừng Sinh Nhật</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hộp Quà Sinh Nhật</title>
     <style>
         /* Nền vàng nhạt caro giống video */
         body {
             margin: 0;
-            background-color: #FFF9C4;
-            background-image: radial-gradient(#FBC02D 0.5px, transparent 0.5px);
-            background-size: 20px 20px;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
+            background-color: #FFFDE7;
+            background-image: linear-gradient(#FFECB3 1px, transparent 1px),
+                              linear-gradient(90deg, #FFECB3 1px, transparent 1px);
+            background-size: 25px 25px;
             font-family: 'Arial', sans-serif;
             overflow: hidden;
         }
 
-        /* Hộp quà */
-        #gift-container {
-            text-align: center;
+        /* Container hộp quà */
+        .gift-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             cursor: pointer;
-            transition: transform 0.3s;
+            transition: transform 0.3s ease;
         }
-        #gift-container:hover { transform: scale(1.1); }
+
+        .gift-container:hover {
+            transform: scale(1.05);
+        }
+
+        /* Vẽ hộp quà bằng CSS thuần */
         .gift-box {
-            width: 150px; height: 120px;
-            background: #FFD54F;
-            border: 4px solid #333;
+            width: 150px;
+            height: 150px;
+            background: #E67E22; /* Màu cam đậm của hộp */
             position: relative;
-            margin: 0 auto;
-        }
-        .gift-box::before { /* Nơ dọc */
-            content: ''; position: absolute; width: 30px; height: 100%;
-            background: #D32F2F; left: 50%; transform: translateX(-50%);
-        }
-        .gift-box::after { /* Nơ ngang */
-            content: ''; position: absolute; width: 100%; height: 25px;
-            background: #D32F2F; top: 40px; left: 0;
+            border-radius: 10px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+            animation: bounce 2s infinite;
         }
 
-        /* Trang sinh nhật (Ẩn lúc đầu) */
-        #birthday-page {
-            display: none;
-            text-align: center;
-            width: 100%;
+        /* Nắp hộp */
+        .gift-box::before {
+            content: '';
+            position: absolute;
+            width: 170px;
+            height: 40px;
+            background: #F39C12; /* Màu nắp sáng hơn */
+            top: -10px;
+            left: -10px;
+            border-radius: 5px;
+            z-index: 2;
         }
 
-        /* Ảnh xoay tròn */
-        .circle-frame {
-            width: 200px; height: 200px;
-            border-radius: 50%;
-            border: 8px solid #FFF;
-            overflow: hidden;
-            margin: 20px auto;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-            animation: spin 10s linear infinite;
-        }
-        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-        .circle-frame img { width: 100%; height: 100%; object-fit: cover; }
-
-        /* Nút mở thư */
-        .btn-open {
-            background: #FFD54F;
-            border: 2px solid #333;
-            padding: 10px 30px;
-            font-weight: bold;
-            border-radius: 20px;
-            cursor: pointer;
+        /* Dây ruy băng dọc */
+        .ribbon-v {
+            position: absolute;
+            width: 30px;
+            height: 100%;
+            background: #C0392B; /* Màu đỏ ruy băng */
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 3;
         }
 
-        /* Bức thư */
-        #letter {
-            display: none;
-            position: fixed;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            width: 300px;
-            background: white;
-            padding: 20px;
-            border: 2px solid #333;
-            box-shadow: 10px 10px 0px #FFD54F;
-            z-index: 10;
+        /* Nơ trên đỉnh */
+        .bow {
+            position: absolute;
+            top: -45px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 40px;
+            z-index: 4;
         }
 
-        /* Các icon bay bay (hoa, sao) */
-        .decor { position: absolute; font-size: 24px; animation: float 3s infinite ease-in-out; }
-        @keyframes float { 
-            0%, 100% { transform: translateY(0) rotate(0); }
-            50% { transform: translateY(-20px) rotate(20deg); }
+        .bow::before, .bow::after {
+            content: '';
+            position: absolute;
+            width: 35px;
+            height: 35px;
+            border: 8px solid #C0392B;
+            border-radius: 50% 50% 0 50%;
+            transform: rotate(45deg);
+        }
+
+        .bow::after {
+            left: 25px;
+            border-radius: 50% 50% 50% 0;
+            transform: rotate(-45deg);
+        }
+
+        /* Dòng chữ yêu cầu nhấn */
+        .text-hint {
+            margin-top: 40px;
+            color: #C0392B;
+            font-size: 1.5rem;
+            font-style: italic;
+            font-family: 'Times New Roman', serif;
+            letter-spacing: 1px;
+            animation: pulse 1.5s infinite;
+        }
+
+        /* Hiệu ứng nảy hộp quà */
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.6; }
+            50% { opacity: 1; }
+            100% { opacity: 0.6; }
         }
     </style>
 </head>
 <body>
 
-    <div id="gift-container" onclick="openGift()">
-        <div class="gift-box"></div>
-        <p><b>Bấm vào hộp quà đi! 🎁</b></p>
-    </div>
-
-    <div id="birthday-page">
-        <h1 style="color: #333; -webkit-text-stroke: 1px #FFF;">HAPPY BIRTHDAY</h1>
-        <div class="circle-frame">
-            <img src="https://via.placeholder.com/200" alt="Avatar">
+    <div class="gift-container" onclick="nextStep()">
+        <div class="gift-box">
+            <div class="bow"></div>
+            <div class="ribbon-v"></div>
         </div>
-        <div style="background: #FFD54F; display: inline-block; padding: 5px 20px; border-radius: 20px; font-weight: bold; margin-bottom: 20px;">
-            JU JING YI
-        </div>
-        <br>
-        <button class="btn-open" onclick="showLetter()">Mở thư nè 💌</button>
-    </div>
-
-    <div id="letter">
-        <h3 style="text-align: center;">Gửi Cậu...</h3>
-        <p>Chúc cậu một ngày sinh nhật thật tuyệt vời! Luôn xinh đẹp và hạnh phúc như hiện tại nhé.</p>
-        <button onclick="document.getElementById('letter').style.display='none'">Đóng</button>
+        <div class="text-hint">Nhấn để mở món quà</div>
     </div>
 
     <script>
-        function openGift() {
-            document.getElementById('gift-container').style.display = 'none';
-            document.getElementById('birthday-page').style.display = 'block';
-            createDecor();
-        }
-
-        function showLetter() {
-            document.getElementById('letter').style.display = 'block';
-        }
-
-        // Tạo hiệu ứng hoa và sao bay ngẫu nhiên
-        function createDecor() {
-            const icons = ['🌸', '✨', '💖', '⭐'];
-            for(let i=0; i<15; i++) {
-                let div = document.createElement('div');
-                div.className = 'decor';
-                div.innerText = icons[Math.floor(Math.random() * icons.length)];
-                div.style.left = Math.random() * 100 + "vw";
-                div.style.top = Math.random() * 100 + "vh";
-                div.style.animationDelay = Math.random() * 2 + "s";
-                document.body.appendChild(div);
-            }
+        function nextStep() {
+            // Hiệu ứng khi nhấn vào (tạm thời log ra, bạn có thể nối vào code màn hình sau)
+            alert("Món quà đang mở ra...");
         }
     </script>
 </body>

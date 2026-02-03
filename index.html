@@ -2,78 +2,79 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HoangKun Store Clone</title>
+    <title>HOANGKUN STORE V2 - Full Shop</title>
     <style>
-        body {
-            background-color: #121212;
-            color: white;
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 20px;
-        }
-        .container {
-            max-width: 600px;
-            margin: auto;
-        }
-        /* Card sản phẩm */
-        .card {
-            background-color: #1e1e1e;
-            border-radius: 15px;
-            overflow: hidden;
-            margin-bottom: 20px;
-            text-align: center;
-            border: 1px solid #333;
-        }
-        .card img {
-            width: 100%;
-            height: auto;
-        }
-        .card-body {
-            padding: 20px;
-        }
-        .title {
-            font-size: 20px;
-            font-weight: bold;
-            text-transform: uppercase;
-        }
-        .price {
-            color: #ff3131;
-            font-size: 24px;
-            font-weight: bold;
-            margin: 10px 0;
-        }
-        /* Nút Mua Ngay */
-        .btn-buy {
-            background-color: #ff0000;
-            color: white;
-            border: none;
-            padding: 12px 0;
-            width: 90%;
-            border-radius: 8px;
-            font-weight: bold;
-            cursor: pointer;
-            text-transform: uppercase;
-            transition: 0.3s;
-        }
-        .btn-buy:hover {
-            background-color: #cc0000;
-            transform: scale(1.02);
-        }
+        :root { --red: #ff0000; --dark-card: #111; }
+        body { background: #000; color: #fff; font-family: sans-serif; margin: 0; }
+        
+        /* Nav & Banner */
+        nav { background: #050505; padding: 15px 5%; display: flex; justify-content: space-between; border-bottom: 1px solid #222; position: sticky; top: 0; z-index: 100; }
+        .logo { font-weight: bold; font-size: 20px; }
+        .btn-red { background: var(--red); color: #fff; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-weight: bold; }
+        
+        .banner { background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), #1a3a5a; padding: 60px 20px; text-align: center; margin: 20px; border-radius: 10px; border: 1px solid #1e3a8a; }
+
+        /* Grid sản phẩm */
+        .container { max-width: 1200px; margin: auto; padding: 20px; }
+        .section-title { border-left: 4px solid var(--red); padding-left: 10px; margin-bottom: 20px; font-weight: bold; }
+        
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
+        .card { background: var(--dark-card); border-radius: 10px; border: 1px solid #222; overflow: hidden; transition: 0.3s; position: relative; }
+        .card:hover { border-color: var(--red); transform: translateY(-5px); }
+        
+        .img-box { background: #222; height: 160px; display: flex; align-items: center; justify-content: center; color: #444; font-weight: bold; }
+        .card-body { padding: 15px; text-align: center; }
+        .price { color: var(--red); font-size: 20px; font-weight: bold; margin: 10px 0; }
+        
+        /* Thông báo nạp tiền góc màn hình */
+        #noti-box { position: fixed; bottom: 20px; left: 20px; background: rgba(0,0,0,0.9); border-left: 4px solid #28a745; padding: 10px 20px; border-radius: 5px; font-size: 13px; animation: fadeInUp 0.5s; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <div class="card">
-        <img src="https://via.placeholder.com/400x250" alt="Web Shop Preview">
-        <div class="card-body">
-            <div class="title">CODE WEB SHOP</div>
-            <div class="price">350.000đ</div>
-            <button class="btn-buy">MUA NGAY</button>
-        </div>
+<nav>
+    <div class="logo">HOANGKUN<span style="color:var(--red)">STORE</span></div>
+    <div>
+        <button class="btn-red" onclick="alert('Chuyển đến trang Đăng Nhập')">ĐĂNG NHẬP / ĐĂNG KÝ</button>
     </div>
+</nav>
+
+<div class="container">
+    <div class="banner">
+        <h1 style="margin:0">HOANGKUN STORE V2</h1>
+        <p style="color:#aaa">Hệ thống bán Source Code tự động - Uy tín - Bảo mật</p>
+    </div>
+
+    <div class="section-title">🔥 SẢN PHẨM MỚI NHẤT</div>
+    
+    <div class="product-grid" id="product-list">
+        <div class="card">
+            <div class="img-box">IMAGE NOT FOUND</div>
+            <div class="card-body">
+                <div style="font-size: 14px; height: 40px;">BIO LINK CYBER RED</div>
+                <div class="price">49.000đ</div>
+                <button class="btn-red" style="width:100%">MUA NGAY</button>
+            </div>
+        </div>
+        </div>
 </div>
+
+<div id="noti-box">
+    ✅ Khách hàng <b>Quốc Bảo</b> vừa nạp thành công <span style="color:#28a745">500.000đ</span>
+</div>
+
+<script>
+    // Hiệu ứng thông báo nạp tiền ngẫu nhiên cho giống thật
+    const names = ["Tùng", "Sơn", "Hải", "Linh", "Quân"];
+    const money = ["50.000đ", "100.000đ", "200.000đ", "500.000đ"];
+    
+    setInterval(() => {
+        const name = names[Math.floor(Math.random() * names.length)];
+        const m = money[Math.floor(Math.random() * money.length)];
+        document.getElementById('noti-box').innerHTML = `✅ Khách hàng <b>${name}</b> vừa nạp thành công <span style="color:#28a745">${m}</span>`;
+    }, 5000);
+</script>
 
 </body>
 </html>

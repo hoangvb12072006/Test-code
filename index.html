@@ -3,247 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hộp Quà Sinh Nhật</title>
+    <title>HoangKun Store Clone</title>
     <style>
-
-    .hb-wrapper {
-    position: absolute;
-    top: 5vh; 
-    left: 50%; /* Đưa khung về giữa theo trục X */
-    transform: translateX(-50%); /* Dịch ngược lại 50% để cân bằng */
-    width: 100%;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* Đảm bảo các dòng con cũng vào giữa */
-}
-
-.hb-line {
-    font-family: 'Arial Black', sans-serif;
-    font-size: 18vw; /* Tăng kích thước cực đại theo màn hình */
-    line-height: 0.9; /* Giảm khoảng cách để 2 dòng dính sát nhau như mẫu */
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    font-weight: 900; /* Đảm bảo chữ dày nhất có thể */
-}
-
-/* Tìm đoạn này và sửa lại nội dung bên trong */
-.white-text .letter { 
-    color: white; 
-    -webkit-text-stroke: 1.2vw #000; /* Thay 2px cũ bằng cái này */
-    text-shadow: 1.5vw 1.5vw 0px #000; /* Thay 3px cũ bằng cái này */
-}
-
-/* Tìm đoạn này và sửa lại nội dung bên trong */
-.yellow-text .letter { 
-    color: #FFD54F; 
-    -webkit-text-stroke: 1.2vw #000; /* Thay 2px cũ bằng cái này */
-    text-shadow: 1.5vw 1.5vw 0px #000; /* Thay 3px cũ bằng cái này */
-}
-
-.letter {
-    display: inline-block;
-    opacity: 0;
-    transform: translateY(100px); /* Bay từ dưới lên */
-    transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-.letter.show { 
-    opacity: 1; 
-    transform: translateY(0); 
-}
-
         body {
+            background-color: #121212;
+            color: white;
+            font-family: Arial, sans-serif;
             margin: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #FFFDE7;
-            background-image: linear-gradient(#FFECB3 1px, transparent 1px),
-                              linear-gradient(90deg, #FFECB3 1px, transparent 1px);
-            background-size: 25px 25px;
-            font-family: 'Arial', sans-serif;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+        }
+        /* Card sản phẩm */
+        .card {
+            background-color: #1e1e1e;
+            border-radius: 15px;
             overflow: hidden;
-        }
-
-        /* MÀN HÌNH 1: HỘP QUÀ */
-        #screen-1 {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            cursor: pointer;
-            transition: opacity 0.8s ease, transform 0.8s ease; /* Hiệu ứng làm mờ */
-        }
-
-        .gift-box {
-            width: 150px;
-            height: 150px;
-            background: #E67E22;
-            position: relative;
-            border-radius: 10px;
-            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
-            animation: bounce 2s infinite;
-        }
-
-        .gift-box::before {
-            content: ''; position: absolute; width: 170px; height: 40px;
-            background: #F39C12; top: -10px; left: -10px; border-radius: 5px; z-index: 2;
-        }
-
-        .ribbon-v {
-            position: absolute; width: 30px; height: 100%;
-            background: #C0392B; left: 50%; transform: translateX(-50%); z-index: 3;
-        }
-
-        .bow {
-            position: absolute; top: -45px; left: 50%; transform: translateX(-50%);
-            width: 60px; height: 40px; z-index: 4;
-        }
-
-        .bow::before, .bow::after {
-            content: ''; position: absolute; width: 35px; height: 35px;
-            border: 8px solid #C0392B; border-radius: 50% 50% 0 50%; transform: rotate(45deg);
-        }
-
-        .bow::after { left: 25px; border-radius: 50% 50% 50% 0; transform: rotate(-45deg); }
-
-        .text-hint {
-            margin-top: 40px; color: #C0392B; font-size: 1.5rem;
-            font-style: italic; font-family: 'Times New Roman', serif;
-        }
-
-        /* MÀN HÌNH 2: HAPPY BIRTHDAY */
-        #screen-2 {
-            display: none;
+            margin-bottom: 20px;
             text-align: center;
-            opacity: 0;
-            transition: opacity 1.5s ease;
+            border: 1px solid #333;
         }
-
-        .hb-title {
-            font-size: 4rem;
+        .card img {
+            width: 100%;
+            height: auto;
+        }
+        .card-body {
+            padding: 20px;
+        }
+        .title {
+            font-size: 20px;
             font-weight: bold;
-            color: #333;
-            -webkit-text-stroke: 2px white;
-            text-shadow: 3px 3px 0px #FFD54F;
-            margin: 0;
+            text-transform: uppercase;
         }
-
-        /* Lớp phủ làm mờ khi biến mất */
-        .fade-out {
-            opacity: 0 !important;
-            transform: scale(0.9);
+        .price {
+            color: #ff3131;
+            font-size: 24px;
+            font-weight: bold;
+            margin: 10px 0;
         }
-
-        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
-
-   .party-hat {
-    position: absolute;
-    width: 0;
-    height: 0;
-    /* Thu nhỏ kích thước nón lại */
-    border-left: 10px solid transparent; 
-    border-right: 10px solid transparent;
-    border-bottom: 25px solid #333; 
-    
-    top: -100px; 
-    /* Căn chỉnh lại để nó rơi trúng chữ 'y' */
-    left: calc(50% + 55px); 
-    z-index: 100;
-    opacity: 0;
-    transition: all 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-/* Chấm bi nhỏ lại cho tinh tế */
-.party-hat::after {
-    content: '●';
-    font-size: 6px;
-    color: #ff4081;
-    position: absolute;
-    top: 12px;
-    left: -3px;
-    text-shadow: 6px 5px #ff4081, 0px 8px #ff4081;
-}
-
-/* Vị trí đậu chuẩn trên đầu chữ 'y' */
-.party-hat.fall {
-    opacity: 1;
-    top: -18px; /* Đẩy lên một chút để không đè nát chữ */
-    transform: rotate(15deg);
-}
-
-/* Thêm cái chóp nón và chấm bi */
-.party-hat::after {
-    content: '●';
-    color: #ff4081;
-    position: absolute;
-    bottom: 5px;
-    left: 10px;
-    font-size: 10px;
-    text-shadow: 20px 0 #ff4081, 10px -15px #ff4081;
-}
-
-.party-hat.fall {
-    opacity: 1;
-    top: -30px; /* Rơi xuống đậu trên chữ Happy */
-    transform: rotate(15deg);
-}
-    
+        /* Nút Mua Ngay */
+        .btn-buy {
+            background-color: #ff0000;
+            color: white;
+            border: none;
+            padding: 12px 0;
+            width: 90%;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: 0.3s;
+        }
+        .btn-buy:hover {
+            background-color: #cc0000;
+            transform: scale(1.02);
+        }
     </style>
 </head>
 <body>
 
-    <div id="screen-1" onclick="startTransition()">
-        <div class="gift-box">
-            <div class="bow"></div>
-            <div class="ribbon-v"></div>
+<div class="container">
+    <div class="card">
+        <img src="https://via.placeholder.com/400x250" alt="Web Shop Preview">
+        <div class="card-body">
+            <div class="title">CODE WEB SHOP</div>
+            <div class="price">350.000đ</div>
+            <button class="btn-buy">MUA NGAY</button>
         </div>
-        <div class="text-hint">Nhấn để mở món quà</div>
-    </div>
-
-   <div id="screen-2">
-    <div class="hb-wrapper">
-        <div class="hb-line white-text" id="happy-text">Happy</div>
-        <div class="party-hat" id="hat"></div> <div class="hb-line yellow-text" id="birthday-text">Birthday</div>
     </div>
 </div>
 
-
-    <script>
-        function startTransition() {
-    const s1 = document.getElementById('screen-1');
-    const s2 = document.getElementById('screen-2');
-    s1.classList.add('fade-out');
-
-    setTimeout(() => {
-        s1.style.display = 'none';
-        s2.style.display = 'block';
-        s2.style.opacity = '1';
-
-        // Gọi hiệu ứng cho từng dòng
-        animateLetters('happy-text', 0);
-        animateLetters('birthday-text', 500); // Dòng 2 trễ hơn 0.5s
-                // Cho nón rơi sau khi chữ nhảy xong
-        setTimeout(() => {
-            document.getElementById('hat').classList.add('fall');
-        }, 1500); 
-    }, 800);
-}
-
-function animateLetters(id, delay) {
-    const el = document.getElementById(id);
-    const content = el.innerText;
-    el.innerHTML = '';
-    [...content].forEach((char, i) => {
-        const span = document.createElement('span');
-        span.innerText = char === ' ' ? '\u00A0' : char;
-        span.className = 'letter';
-        el.appendChild(span);
-        setTimeout(() => span.classList.add('show'), delay + (i * 80));
-    });
-}
-
-    </script>
 </body>
 </html>

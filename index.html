@@ -3,135 +3,475 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HOANGKUN STORE - SIÊU HỆ THỐNG MÃ NGUỒN VIỆT NAM</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Hệ Thống Quản Trị Đa Năng - Gemini Pro</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-dark: #4338ca;
+            --secondary: #64748b;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --bg-main: #f8fafc;
+            --sidebar-width: 260px;
+            --card-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: #1e293b;
+            display: flex;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* --- Sidebar Styles --- */
+        aside {
+            width: var(--sidebar-width);
+            background: #1e293b;
+            color: white;
+            height: 100vh;
+            position: fixed;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .sidebar-header {
+            padding: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.25rem;
+            font-weight: 700;
+            border-bottom: 1px solid #334155;
+        }
+
+        .nav-links {
+            padding: 1rem 0;
+            list-style: none;
+        }
+
+        .nav-item {
+            padding: 0.75rem 2rem;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            cursor: pointer;
+            transition: 0.2s;
+            color: #cbd5e1;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            background: #334155;
+            color: white;
+            border-left: 4px solid var(--primary);
+        }
+
+        /* --- Main Content --- */
+        main {
+            margin-left: var(--sidebar-width);
+            width: calc(100% - var(--sidebar-width));
+            transition: all 0.3s ease;
+        }
+
+        header {
+            height: 70px;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 2rem;
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 900;
+        }
+
+        .search-bar {
+            background: #f1f5f9;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            width: 300px;
+        }
+
+        .search-bar input {
+            border: none;
+            background: transparent;
+            outline: none;
+            margin-left: 10px;
+            width: 100%;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .user-profile img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        /* --- Dashboard Grid --- */
+        .content-wrapper {
+            padding: 2rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        /* --- Table Section --- */
+        .data-section {
+            background: white;
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .table-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            text-align: left;
+            padding: 1rem;
+            background: #f8fafc;
+            color: #64748b;
+            font-weight: 600;
+        }
+
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .status-pill {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+        }
+
+        /* --- Form Section --- */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .custom-form {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+        }
+
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            outline-color: var(--primary);
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-primary:hover { background: var(--primary-dark); }
+
+        /* --- Modal --- */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            width: 500px;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        /* Thêm các hiệu ứng lặp lại để tăng độ dài mã nguồn một cách có cấu trúc */
+        .utility-box { margin-top: 10px; padding: 10px; border: 1px dashed #ccc; }
+        
+    </style>
 </head>
 <body>
 
-<div id="topbar">
-    <div class="container">
-        <marquee>Thông báo: Hệ thống bảo trì nạp thẻ cào từ 0h-2h sáng ngày 06/02. Nạp bank vẫn hoạt động bình thường. Chúc các đại gia mua sắm vui vẻ!</marquee>
-    </div>
-</div>
-
-<header>
-    <div class="container flex-nav">
-        <div class="logo">HOANGKUN<span>STORE</span></div>
-        <nav>
-            <ul>
-                <li><a href="#home">Trang Chủ</a></li>
-                <li><a href="#shop">Kho Code Game</a></li>
-                <li><a href="#web">Dịch Vụ Web</a></li>
-                <li><a href="#naptien">Nạp Tiền</a></li>
-                <li><a href="#blog">Tin Tức</a></li>
-                <li><a href="#contact">Liên Hệ</a></li>
-            </ul>
-        </nav>
-        <div class="auth-box">
-            <button class="btn-user">ĐĂNG NHẬP</button>
+    <aside id="sidebar">
+        <div class="sidebar-header">
+            <i class="fas fa-rocket text-primary"></i>
+            <span>GEMINI CORE</span>
         </div>
-    </div>
-</header>
-
-<section class="hero-v3">
-    <div class="container">
-        <div class="hero-inner">
-            <h2>KHO SOURCE CODE <br>TỰ ĐỘNG HÓA 100%</h2>
-            <p>Cam kết mã nguồn sạch, hỗ trợ setup lên VPS/Hosting miễn phí lần đầu cho mọi khách hàng mới.</p>
-            <div class="search-v3">
-                <input type="text" placeholder="Nhập tên code cần tìm (VD: Web bán acc, Shop roblox...)">
-                <button><i class="fa fa-search"></i> TÌM</button>
+        <ul class="nav-links">
+            <li class="nav-item active"><i class="fas fa-chart-line"></i> Tổng quan</li>
+            <li class="nav-item"><i class="fas fa-users"></i> Khách hàng</li>
+            <li class="nav-item"><i class="fas fa-shopping-cart"></i> Đơn hàng</li>
+            <li class="nav-item"><i class="fas fa-box"></i> Sản phẩm</li>
+            <li class="nav-item"><i class="fas fa-envelope"></i> Tin nhắn</li>
+            <li class="nav-item"><i class="fas fa-cog"></i> Cài đặt hệ thống</li>
+            <li class="nav-item"><i class="fas fa-shield-alt"></i> Bảo mật</li>
+            <li class="nav-item" onclick="toggleModal()"><i class="fas fa-sign-out-alt"></i> Đăng xuất</li>
+        </ul>
+        
+        <div style="padding: 2rem; position: absolute; bottom: 0;">
+            <div style="background: #334155; padding: 1rem; border-radius: 8px;">
+                <small>Dung lượng Cloud</small>
+                <div style="height: 5px; background: #475569; margin: 10px 0; border-radius: 10px;">
+                    <div style="width: 75%; height: 100%; background: var(--primary);"></div>
+                </div>
+                <small>750GB / 1TB</small>
             </div>
         </div>
-    </div>
-</section>
+    </aside>
 
-<section class="main-content" id="shop">
-    <div class="container">
-        <h2 class="title-section">SẢN PHẨM NỔI BẬT</h2>
-        <div class="product-grid">
+    <main>
+        <header>
+            <div class="search-bar">
+                <i class="fas fa-search text-secondary"></i>
+                <input type="text" placeholder="Tìm kiếm dữ liệu...">
+            </div>
+            <div class="user-profile">
+                <i class="far fa-bell" style="font-size: 1.2rem; cursor: pointer;"></i>
+                <div style="text-align: right;">
+                    <p style="font-weight: 600; font-size: 0.9rem;">Nguyễn Văn A</p>
+                    <small style="color: var(--secondary);">Quản trị viên</small>
+                </div>
+                <img src="https://ui-avatars.com/api/?name=Admin&background=4f46e5&color=fff" alt="Avatar">
+            </div>
+        </header>
 
-            <div class="item">
-                <div class="badge-hot">HOT</div>
-                <img src="https://via.placeholder.com/400x250" alt="code">
-                <div class="item-info">
-                    <h3>Code Web Bán Acc Liên Quân V1</h3>
-                    <p>Giao diện siêu mượt, tích hợp vòng quay may mắn, nạp bank auto.</p>
-                    <div class="price">150.000đ <span>300.000đ</span></div>
-                    <button class="btn-buy">MUA NGAY</button>
+        <div class="content-wrapper">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div>
+                        <p style="color: var(--secondary);">Doanh thu tháng</p>
+                        <h2 style="margin: 5px 0;">$12,450</h2>
+                        <small style="color: var(--success);"><i class="fas fa-arrow-up"></i> +12.5%</small>
+                    </div>
+                    <div class="stat-icon" style="background: #e0e7ff; color: var(--primary);">
+                        <i class="fas fa-dollar-sign"></i>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div>
+                        <p style="color: var(--secondary);">Người dùng mới</p>
+                        <h2 style="margin: 5px 0;">+1,200</h2>
+                        <small style="color: var(--success);"><i class="fas fa-arrow-up"></i> +5.2%</small>
+                    </div>
+                    <div class="stat-icon" style="background: #dcfce7; color: var(--success);">
+                        <i class="fas fa-user-plus"></i>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div>
+                        <p style="color: var(--secondary);">Tỷ lệ thoát</p>
+                        <h2 style="margin: 5px 0;">24.03%</h2>
+                        <small style="color: var(--danger);"><i class="fas fa-arrow-down"></i> -2.1%</small>
+                    </div>
+                    <div class="stat-icon" style="background: #fee2e2; color: var(--danger);">
+                        <i class="fas fa-chart-pie"></i>
+                    </div>
                 </div>
             </div>
 
-            <div class="item">
-                <div class="badge-new">NEW</div>
-                <img src="https://via.placeholder.com/400x250" alt="code">
-                <div class="item-info">
-                    <h3>Source Shop Roblox Đầy Đủ</h3>
-                    <p>Có chức năng rút Robux tự động, quản lý kho hàng thông minh.</p>
-                    <div class="price">200.000đ <span>500.000đ</span></div>
-                    <button class="btn-buy">MUA NGAY</button>
+            <div class="data-section">
+                <div class="table-header">
+                    <h3>Giao dịch gần đây</h3>
+                    <button class="btn btn-primary" onclick="alert('Xuất báo cáo thành công!')">Xuất Excel</button>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Mã đơn</th>
+                            <th>Khách hàng</th>
+                            <th>Ngày đặt</th>
+                            <th>Số tiền</th>
+                            <th>Trạng thái</th>
+                            <th>Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                        </tbody>
+                </table>
+            </div>
+
+            <div class="form-grid">
+                <div class="custom-form">
+                    <h3>Thêm sản phẩm mới</h3>
+                    <br>
+                    <form id="productForm">
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                            <div class="form-group">
+                                <label>Tên sản phẩm</label>
+                                <input type="text" required placeholder="Nhập tên...">
+                            </div>
+                            <div class="form-group">
+                                <label>Danh mục</label>
+                                <select>
+                                    <option>Điện tử</option>
+                                    <option>Thời trang</option>
+                                    <option>Gia dụng</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Mô tả chi tiết</label>
+                            <textarea rows="4" placeholder="Nhập mô tả sản phẩm..."></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Lưu sản phẩm</button>
+                    </form>
+                </div>
+
+                <div class="custom-form">
+                    <h3>Hoạt động gần đây</h3>
+                    <ul style="list-style: none; margin-top: 1rem;">
+                        <li style="padding: 10px 0; border-bottom: 1px solid #eee;">
+                            <small style="color: var(--primary);">10 phút trước</small>
+                            <p>Admin đã cập nhật hệ thống bảo mật v2.4</p>
+                        </li>
+                        <li style="padding: 10px 0; border-bottom: 1px solid #eee;">
+                            <small style="color: var(--primary);">1 giờ trước</small>
+                            <p>Người dùng <b>Trần Nam</b> vừa đặt đơn hàng #994</p>
+                        </li>
+                    </ul>
                 </div>
             </div>
+        </div>
+    </main>
 
-            <div class="item">
-                <img src="https://via.placeholder.com/400x250" alt="code">
-                <div class="item-info">
-                    <h3>Code Web Bán Xu/Vàng Tự Động</h3>
-                    <p>Phù hợp cho các game Ninja School, Ngọc Rồng Online.</p>
-                    <div class="price">450.000đ <span>900.000đ</span></div>
-                    <button class="btn-buy">MUA NGAY</button>
-                </div>
-            </div>
-
-            </div>
-    </div>
-</section>
-
-<section class="policy-detail">
-    <div class="container">
-        <h3>ĐIỀU KHOẢN VÀ DỊCH VỤ TẠI HOANGKUN STORE</h3>
-        <div class="policy-box">
-            <h4>1. Quy định về tài khoản</h4>
-            <p>Khách hàng có trách nhiệm tự bảo mật thông tin tài khoản của mình. Chúng tôi không chịu trách nhiệm nếu bạn bị lộ mật khẩu do bên thứ 3.</p>
-            <p>Không được sử dụng tên tài khoản trùng với tên các admin hoặc các từ ngữ thô tục, vi phạm pháp luật.</p>
-            
-            <h4>2. Chính sách nạp tiền</h4>
-            <p>Nạp tiền qua ATM/Momo xử lý từ 30s - 2 phút. Nếu quá thời gian vui lòng liên hệ Admin.</p>
-            <p>Nạp thẻ cào chiết khấu theo giá thị trường. Thẻ sai mệnh giá sẽ bị phạt 50% giá trị thẻ thực.</p>
-            
-            <h4>3. Quyền lợi khách hàng</h4>
-            <p>Mọi source code đều được bảo hành lỗi kỹ thuật vĩnh viễn.</p>
-            <p>Được tham gia nhóm hỗ trợ riêng dành cho khách hàng đã mua code.</p>
-            <p>Được giảm giá 10% cho các lần mua hàng tiếp theo nếu đánh giá 5 sao.</p>
-
-            </div>
-    </div>
-</section>
-
-<footer>
-    <div class="container">
-        <div class="f-grid">
-            <div class="f-about">
-                <h4>HOANGKUN STORE</h4>
-                <p>Địa chỉ: 123 Đường Láng, Đống Đa, Hà Nội</p>
-                <p>Kết nối với chúng tôi qua Facebook, Zalo, Telegram.</p>
-            </div>
-            <div class="f-links">
-                <h4>LIÊN KẾT NHANH</h4>
-                <ul>
-                    <li><a href="#">Hướng dẫn mua hàng</a></li>
-                    <li><a href="#">Nạp tiền ATM</a></li>
-                    <li><a href="#">Gửi Ticket hỗ trợ</a></li>
-                    <li><a href="#">Tuyển cộng tác viên</a></li>
-                </ul>
+    <div class="modal" id="logoutModal">
+        <div class="modal-content">
+            <h3>Xác nhận đăng xuất?</h3>
+            <p style="margin: 15px 0; color: var(--secondary);">Bạn có chắc chắn muốn thoát khỏi hệ thống quản trị không?</p>
+            <div style="display: flex; justify-content: flex-end; gap: 10px;">
+                <button class="btn" onclick="toggleModal()" style="background: #eee;">Hủy</button>
+                <button class="btn btn-primary" onclick="location.reload()">Đồng ý</button>
             </div>
         </div>
-        <div class="copyright">
-            Copyright © 2026 HOANGKUN.PRO - All Rights Reserved.
-        </div>
     </div>
-</footer>
 
+    <script>
+        // Tạo dữ liệu giả cho bảng (Để tăng tính thực tế và độ dài logic)
+        const tableData = [
+            { id: "#ORD-7721", user: "Lê Văn Tám", date: "2023-10-01", price: "$250.00", status: "Hoàn thành", color: "#10b981" },
+            { id: "#ORD-7722", user: "Hoàng Thị Mai", date: "2023-10-02", price: "$120.50", status: "Chờ xử lý", color: "#f59e0b" },
+            { id: "#ORD-7723", user: "Nguyễn Tuấn", date: "2023-10-02", price: "$1,200.00", status: "Đã hủy", color: "#ef4444" },
+            { id: "#ORD-7724", user: "Phạm Bình", date: "2023-10-03", price: "$45.00", status: "Hoàn thành", color: "#10b981" },
+            { id: "#ORD-7725", user: "Vũ Hải", date: "2023-10-04", price: "$99.00", status: "Hoàn thành", color: "#10b981" },
+        ];
+
+        function renderTable() {
+            const tbody = document.getElementById('tableBody');
+            tbody.innerHTML = tableData.map(item => `
+                <tr>
+                    <td><b>${item.id}</b></td>
+                    <td>${item.user}</td>
+                    <td>${item.date}</td>
+                    <td>${item.price}</td>
+                    <td><span class="status-pill" style="background: ${item.color}22; color: ${item.color}">${item.status}</span></td>
+                    <td><i class="fas fa-ellipsis-h" style="cursor:pointer"></i></td>
+                </tr>
+            `).join('');
+        }
+
+        function toggleModal() {
+            const modal = document.getElementById('logoutModal');
+            modal.style.display = modal.style.display === 'flex' ? 'none' : 'flex';
+        }
+
+        // Form handling
+        document.getElementById('productForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Thông tin đã được ghi nhận vào cơ sở dữ liệu!');
+        });
+
+        // Initialize
+        window.onload = () => {
+            renderTable();
+            console.log("Hệ thống đã sẵn sàng.");
+        };
+
+        // Thêm các hàm xử lý phụ trợ để mở rộng mã nguồn...
+        // (Code có thể kéo dài thêm bằng các module quản lý biểu đồ, thông báo push, v.v.)
+    </script>
 </body>
 </html>

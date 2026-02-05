@@ -3,217 +3,135 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HOANGKUN STORE - NEON EDITION</title>
-    
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <title>HOANGKUN STORE - SIÊU HỆ THỐNG MÃ NGUỒN VIỆT NAM</title>
+    <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-    <style>
-        :root {
-            --main-bg: #050510;
-            --accent: #00f2ff;
-            --purple: #7000ff;
-            --glass: rgba(255, 255, 255, 0.03);
-            --border: rgba(255, 255, 255, 0.1);
-        }
-
-        * { box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; transition: all 0.3s ease; }
-
-        body {
-            margin: 0; background: var(--main-bg); color: #fff;
-            overflow-x: hidden;
-            background-image: 
-                radial-gradient(circle at 10% 20%, rgba(112, 0, 255, 0.1) 0%, transparent 40%),
-                radial-gradient(circle at 90% 80%, rgba(0, 242, 255, 0.1) 0%, transparent 40%);
-        }
-
-        /* Navbar hiện đại */
-        nav {
-            padding: 20px 0;
-            position: sticky; top: 0; z-index: 1000;
-            backdrop-filter: blur(15px);
-            border-bottom: 1px solid var(--border);
-        }
-
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
-        .nav-flex { display: flex; justify-content: space-between; align-items: center; }
-
-        .brand {
-            font-size: 24px; font-weight: 800; text-transform: uppercase;
-            background: linear-gradient(90deg, var(--accent), var(--purple));
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-        }
-
-        /* Hero Header */
-        .hero {
-            padding: 80px 20px; text-align: center;
-            background: var(--glass);
-            border: 1px solid var(--border);
-            border-radius: 40px; margin: 20px 0;
-            position: relative; overflow: hidden;
-        }
-
-        .hero h1 { font-size: clamp(30px, 5vw, 60px); margin: 0; font-weight: 800; }
-        .hero p { opacity: 0.6; font-size: 18px; margin-top: 10px; }
-
-        /* Card Sản Phẩm - Kiểu mới */
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 25px; margin-top: 40px;
-        }
-
-        .item-card {
-            background: var(--glass);
-            border: 1px solid var(--border);
-            border-radius: 30px;
-            padding: 10px;
-            position: relative;
-        }
-
-        .item-card:hover {
-            background: rgba(255, 255, 255, 0.07);
-            border-color: var(--accent);
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-        }
-
-        .item-img {
-            width: 100%; height: 200px;
-            border-radius: 25px;
-            object-fit: cover;
-        }
-
-        .item-info { padding: 15px; }
-        .item-title { font-weight: 600; font-size: 16px; margin-bottom: 10px; }
-        
-        .item-price {
-            font-size: 22px; font-weight: 800;
-            color: var(--accent); margin-bottom: 15px;
-        }
-
-        /* Nút bấm Neon */
-        .btn-buy {
-            width: 100%;
-            padding: 14px;
-            border-radius: 20px;
-            border: none;
-            background: linear-gradient(90deg, var(--purple), var(--accent));
-            color: #fff; font-weight: 700; cursor: pointer;
-            text-transform: uppercase; letter-spacing: 1px;
-        }
-
-        .btn-buy:hover {
-            box-shadow: 0 0 20px rgba(0, 242, 255, 0.4);
-            filter: brightness(1.1);
-        }
-
-        /* Bảng Top Đại Gia */
-        .top-box {
-            background: var(--glass);
-            border-radius: 30px;
-            padding: 30px;
-            border: 1px solid var(--border);
-        }
-
-        table { width: 100%; border-collapse: collapse; }
-        td, th { padding: 15px; text-align: left; }
-        tr { border-bottom: 1px solid var(--border); }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .grid { grid-template-columns: repeat(2, 1fr); gap: 15px; }
-        }
-    </style>
 </head>
 <body>
 
-<nav>
-    <div class="container nav-flex">
-        <div class="brand">HOANGKUN STORE</div>
-        <div id="user-area">
-            <button class="btn-buy" style="padding: 10px 25px; font-size: 12px;" onclick="handleLogin()">ĐĂNG NHẬP</button>
-        </div>
+<div id="topbar">
+    <div class="container">
+        <marquee>Thông báo: Hệ thống bảo trì nạp thẻ cào từ 0h-2h sáng ngày 06/02. Nạp bank vẫn hoạt động bình thường. Chúc các đại gia mua sắm vui vẻ!</marquee>
     </div>
-</nav>
-
-<div class="container">
-    <header class="hero">
-        <div style="font-size: 12px; color: var(--accent); letter-spacing: 5px; margin-bottom: 10px;">WELCOME TO THE FUTURE</div>
-        <h1>SOURCE CODE V4</h1>
-        <p>Hệ thống cung cấp tài nguyên số hàng đầu Việt Nam</p>
-    </header>
-
-    <div class="top-box">
-        <h2 style="margin-top: 0;"><i class="fas fa-medal" style="color: gold;"></i> TOP LEADERBOARD</h2>
-        <table id="top-table">
-            <tbody id="top-list">
-                </tbody>
-        </table>
-    </div>
-
-    <div class="grid" id="product-grid">
-        </div>
 </div>
 
-<script>
-    // Config Firebase của bạn
-    const firebaseConfig = {
-        apiKey: "AIzaSyDqpk71mVDWCP3jk7fxbHZayz92LTheY7g",
-        databaseURL: "https://hoangkun-594d0-default-rtdb.firebaseio.com",
-    };
-    if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
-    const db = firebase.database();
+<header>
+    <div class="container flex-nav">
+        <div class="logo">HOANGKUN<span>STORE</span></div>
+        <nav>
+            <ul>
+                <li><a href="#home">Trang Chủ</a></li>
+                <li><a href="#shop">Kho Code Game</a></li>
+                <li><a href="#web">Dịch Vụ Web</a></li>
+                <li><a href="#naptien">Nạp Tiền</a></li>
+                <li><a href="#blog">Tin Tức</a></li>
+                <li><a href="#contact">Liên Hệ</a></li>
+            </ul>
+        </nav>
+        <div class="auth-box">
+            <button class="btn-user">ĐĂNG NHẬP</button>
+        </div>
+    </div>
+</header>
 
-    const data = [
-        { name: "CODE TRAI TYM NEON", price: 25000, img: "https://i.postimg.cc/NKjWYf6d/IMG-6231.gif" },
-        { name: "WEB SHOP GAMING V4", price: 500000, img: "https://i.postimg.cc/JzmdcN7p/game-title.jpg" },
-        { name: "CODE GAME BẮN CUNG", price: 60000, img: "https://i.postimg.cc/svBYRYkr/IMG-6222.png" },
-        { name: "BIO LINK CYBER", price: 49000, img: "https://i.postimg.cc/pmLgxXfS/IMG-6233.png" }
-    ];
+<section class="hero-v3">
+    <div class="container">
+        <div class="hero-inner">
+            <h2>KHO SOURCE CODE <br>TỰ ĐỘNG HÓA 100%</h2>
+            <p>Cam kết mã nguồn sạch, hỗ trợ setup lên VPS/Hosting miễn phí lần đầu cho mọi khách hàng mới.</p>
+            <div class="search-v3">
+                <input type="text" placeholder="Nhập tên code cần tìm (VD: Web bán acc, Shop roblox...)">
+                <button><i class="fa fa-search"></i> TÌM</button>
+            </div>
+        </div>
+    </div>
+</section>
 
-    function render() {
-        document.getElementById('product-grid').innerHTML = data.map(item => `
-            <div class="item-card">
-                <img src="${item.img}" class="item-img">
+<section class="main-content" id="shop">
+    <div class="container">
+        <h2 class="title-section">SẢN PHẨM NỔI BẬT</h2>
+        <div class="product-grid">
+
+            <div class="item">
+                <div class="badge-hot">HOT</div>
+                <img src="https://via.placeholder.com/400x250" alt="code">
                 <div class="item-info">
-                    <div class="item-title">${item.name}</div>
-                    <div class="item-price">${item.price.toLocaleString()}đ</div>
-                    <button class="btn-buy" onclick="buy('${item.name}')">MUA NGAY</button>
+                    <h3>Code Web Bán Acc Liên Quân V1</h3>
+                    <p>Giao diện siêu mượt, tích hợp vòng quay may mắn, nạp bank auto.</p>
+                    <div class="price">150.000đ <span>300.000đ</span></div>
+                    <button class="btn-buy">MUA NGAY</button>
                 </div>
             </div>
-        `).join('');
-    }
 
-    function buy(name) {
-        Swal.fire({
-            title: 'Hệ thống',
-            text: 'Bạn muốn mua ' + name + '?',
-            icon: 'info',
-            showCancelButton: true,
-            confirmButtonColor: '#7000ff',
-            confirmButtonText: 'Xác nhận'
-        });
-    }
+            <div class="item">
+                <div class="badge-new">NEW</div>
+                <img src="https://via.placeholder.com/400x250" alt="code">
+                <div class="item-info">
+                    <h3>Source Shop Roblox Đầy Đủ</h3>
+                    <p>Có chức năng rút Robux tự động, quản lý kho hàng thông minh.</p>
+                    <div class="price">200.000đ <span>500.000đ</span></div>
+                    <button class="btn-buy">MUA NGAY</button>
+                </div>
+            </div>
 
-    // Load Top 3
-    db.ref('users').limitToLast(3).on('value', snap => {
-        let list = "";
-        snap.forEach(child => {
-            list = `<tr>
-                <td><b>${child.key}</b></td>
-                <td style="color:var(--accent); text-align:right"><b>${(child.val().balance || 0).toLocaleString()}đ</b></td>
-            </tr>` + list;
-        });
-        document.getElementById('top-list').innerHTML = list;
-    });
+            <div class="item">
+                <img src="https://via.placeholder.com/400x250" alt="code">
+                <div class="item-info">
+                    <h3>Code Web Bán Xu/Vàng Tự Động</h3>
+                    <p>Phù hợp cho các game Ninja School, Ngọc Rồng Online.</p>
+                    <div class="price">450.000đ <span>900.000đ</span></div>
+                    <button class="btn-buy">MUA NGAY</button>
+                </div>
+            </div>
 
-    render();
-</script>
+            </div>
+    </div>
+</section>
+
+<section class="policy-detail">
+    <div class="container">
+        <h3>ĐIỀU KHOẢN VÀ DỊCH VỤ TẠI HOANGKUN STORE</h3>
+        <div class="policy-box">
+            <h4>1. Quy định về tài khoản</h4>
+            <p>Khách hàng có trách nhiệm tự bảo mật thông tin tài khoản của mình. Chúng tôi không chịu trách nhiệm nếu bạn bị lộ mật khẩu do bên thứ 3.</p>
+            <p>Không được sử dụng tên tài khoản trùng với tên các admin hoặc các từ ngữ thô tục, vi phạm pháp luật.</p>
+            
+            <h4>2. Chính sách nạp tiền</h4>
+            <p>Nạp tiền qua ATM/Momo xử lý từ 30s - 2 phút. Nếu quá thời gian vui lòng liên hệ Admin.</p>
+            <p>Nạp thẻ cào chiết khấu theo giá thị trường. Thẻ sai mệnh giá sẽ bị phạt 50% giá trị thẻ thực.</p>
+            
+            <h4>3. Quyền lợi khách hàng</h4>
+            <p>Mọi source code đều được bảo hành lỗi kỹ thuật vĩnh viễn.</p>
+            <p>Được tham gia nhóm hỗ trợ riêng dành cho khách hàng đã mua code.</p>
+            <p>Được giảm giá 10% cho các lần mua hàng tiếp theo nếu đánh giá 5 sao.</p>
+
+            </div>
+    </div>
+</section>
+
+<footer>
+    <div class="container">
+        <div class="f-grid">
+            <div class="f-about">
+                <h4>HOANGKUN STORE</h4>
+                <p>Địa chỉ: 123 Đường Láng, Đống Đa, Hà Nội</p>
+                <p>Kết nối với chúng tôi qua Facebook, Zalo, Telegram.</p>
+            </div>
+            <div class="f-links">
+                <h4>LIÊN KẾT NHANH</h4>
+                <ul>
+                    <li><a href="#">Hướng dẫn mua hàng</a></li>
+                    <li><a href="#">Nạp tiền ATM</a></li>
+                    <li><a href="#">Gửi Ticket hỗ trợ</a></li>
+                    <li><a href="#">Tuyển cộng tác viên</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            Copyright © 2026 HOANGKUN.PRO - All Rights Reserved.
+        </div>
+    </div>
+</footer>
 
 </body>
 </html>

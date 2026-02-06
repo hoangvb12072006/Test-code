@@ -3,240 +3,315 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LumiLTC Clone - Hệ thống MMO uy tín</title>
+    <title>HOANGKUN STORE - PREMIUM SHOP</title>
     
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
     <style>
         :root {
+            /* Định nghĩa lại bộ màu theo giao diện mới (Sáng/Xanh) */
             --primary-color: #009688; /* Màu xanh ngọc chủ đạo */
+            --secondary-color: #1e3c72; /* Màu xanh dương đậm */
             --bg-body: #f5f7fa;
             --text-dark: #333;
+            --text-light: #777;
+            --card-bg: #ffffff;
+            /* Giữ lại màu đỏ cũ cho các nút chức năng quan trọng nếu muốn */
+            --old-red: #ff0000; 
         }
 
         body {
             background-color: var(--bg-body);
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             font-size: 14px;
+            color: var(--text-dark);
+            margin: 0; padding: 0;
+            overflow-x: hidden;
         }
 
-        /* Top Bar */
+        /* --- CSS CHO HEADER MỚI --- */
+        /* 1. Top Bar (Thanh trên cùng màu xanh đậm) */
         .top-bar {
-            background: linear-gradient(90deg, #1e3c72, #2a5298, #009688);
+            background: linear-gradient(90deg, var(--secondary-color), #2a5298);
             color: white;
-            padding: 5px 0;
+            padding: 8px 0;
             font-size: 12px;
         }
-        .top-bar a { color: white; text-decoration: none; margin-right: 15px; }
+        .top-bar a { color: rgba(255,255,255,0.9); text-decoration: none; margin-right: 20px; transition: 0.3s;}
+        .top-bar a:hover { color: white; }
 
-        /* Header Main */
+        /* 2. Header Main (Khu vực chứa Logo, Tìm kiếm, User) */
         .header-main {
             background: white;
-            padding: 15px 0;
+            padding: 20px 0;
             border-bottom: 1px solid #eee;
         }
-        .logo {
+        .logo-text {
             font-size: 28px;
-            font-weight: bold;
+            font-weight: 800;
             color: var(--primary-color);
-            display: flex;
-            align-items: center;
+            text-transform: uppercase;
+            text-decoration: none;
         }
+        .logo-text span { color: var(--secondary-color); }
+
         .search-box {
             position: relative;
-            max-width: 500px;
             width: 100%;
         }
         .search-box input {
-            border-radius: 20px;
-            padding-right: 40px;
+            border-radius: 30px;
+            padding: 12px 20px;
+            padding-right: 50px;
             background: #f8f9fa;
-            border: 1px solid #ddd;
+            border: 2px solid #eee;
+            width: 100%;
+            outline: none;
+            transition: 0.3s;
         }
-        .search-box i {
+        .search-box input:focus { border-color: var(--primary-color); background: white; }
+        .search-box .search-btn {
             position: absolute;
-            right: 15px;
+            right: 5px;
             top: 50%;
             transform: translateY(-50%);
-            color: #888;
-        }
-        .header-icons i {
-            font-size: 18px;
-            color: #555;
-            margin: 0 10px;
+            border: none;
+            background: var(--primary-color);
+            color: white;
+            width: 40px; height: 40px;
+            border-radius: 50%;
             cursor: pointer;
         }
-        .user-info {
-            display: flex;
-            align-items: center;
-            gap: 10px;
+        
+        .header-actions { display: flex; align-items: center; justify-content: flex-end; }
+        .header-icon-link {
+            font-size: 20px; color: #555; margin-left: 25px; cursor: pointer; position: relative;
         }
-        .user-balance {
-            font-weight: bold;
-            color: var(--primary-color);
+        .header-icon-link:hover { color: var(--primary-color); }
+
+        /* Khu vực hiển thị User */
+        .user-info-box {
+            display: flex; align-items: center; margin-left: 30px;
+            cursor: pointer;
+        }
+        .user-avatar {
+            width: 45px; height: 45px; border-radius: 50%; object-fit: cover;
+            border: 2px solid var(--primary-color); margin-right: 10px;
+        }
+        .user-details { display: flex; flex-direction: column; line-height: 1.3; }
+        .user-name { font-weight: 700; font-size: 15px; }
+        .user-balance-display { font-size: 14px; color: var(--old-red); font-weight: 600; }
+
+        /* 3. Navigation Bar (Thanh menu dưới cùng) */
+        .nav-menu {
+            background: white; padding: 0;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+        .nav-link-custom {
+            color: var(--text-dark); font-weight: 600; padding: 15px 20px;
+            display: inline-flex; align-items: center; text-decoration: none;
+            transition: 0.3s; border-bottom: 3px solid transparent;
+        }
+        .nav-link-custom:hover { color: var(--primary-color); border-bottom-color: var(--primary-color); }
+        .nav-link-custom i { margin-right: 8px; color: #888; }
+        .badge-hot {
+            background: linear-gradient(45deg, #ff5722, #ff9800);
+            color: white; font-size: 10px; padding: 3px 6px;
+            border-radius: 10px; margin-left: 5px; font-weight: bold;
+        }
+        .btn-admin-nav {
+            background-color: var(--secondary-color); color: white;
+            padding: 8px 20px; border-radius: 30px; font-size: 13px; font-weight: 600;
+            text-decoration: none; display: inline-block;
+        }
+        .btn-admin-nav:hover { background: #163461; color: white; }
+
+        /* --- CSS CHO HERO SECTION & CARDS --- */
+        .hero-section { padding: 30px 0; }
+        .banner-side img, .main-slider img {
+            width: 100%; border-radius: 12px; object-fit: cover;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+        .banner-side img { height: 380px; } /* Chiều cao cố định cho banner 2 bên */
+        .main-slider img { height: 380px; }
+
+        /* Feature Cards (4 thẻ màu sắc) */
+        .category-card {
+            border-radius: 15px; overflow: hidden; position: relative;
+            height: 120px; display: flex; align-items: center; padding: 20px;
+            color: white; transition: transform 0.3s, box-shadow 0.3s;
+            margin-bottom: 25px; cursor: pointer;
+        }
+        .category-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.15); }
+        .bg-gradient-red { background: linear-gradient(135deg, #ef473a, #cb2d3e); }
+        .bg-gradient-green { background: linear-gradient(135deg, #38ef7d, #11998e); }
+        .cat-content { z-index: 2; }
+        .cat-title { font-weight: 800; font-size: 18px; text-transform: uppercase; margin-bottom: 5px; }
+        .cat-sub { font-size: 13px; opacity: 0.9; font-weight: 600; }
+        .cat-icon-bg {
+            position: absolute; right: 15px; bottom: 10px;
+            font-size: 80px; opacity: 0.2; z-index: 1; transform: rotate(-10deg);
         }
 
-        /* Navigation */
-        .nav-menu {
-            background: white;
-            padding: 10px 0;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        /* --- CSS CHO SẢN PHẨM (Chỉnh lại cho hợp nền sáng) --- */
+        .shop-title-box {
+            display: flex; align-items: center; justify-content: space-between;
+            margin: 40px 0 25px; padding-bottom: 15px; border-bottom: 2px solid #eee;
         }
-        .nav-link {
-            color: #333;
-            font-weight: 600;
-            margin-right: 15px;
-            display: inline-flex;
-            align-items: center;
-        }
-        .badge-hot {
-            background: #ff5722;
-            color: white;
-            font-size: 10px;
-            padding: 2px 5px;
-            border-radius: 4px;
-            margin-left: 5px;
-        }
-        .btn-admin {
-            background-color: #164e63;
-            color: white;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 12px;
-            text-decoration: none;
+        .shop-title {
+            font-size: 24px; font-weight: 800; color: var(--secondary-color);
+            text-transform: uppercase; margin: 0;
+            border-left: 5px solid var(--primary-color); padding-left: 15px;
         }
         
-        /* Hero Section */
-        .hero-section {
-            padding: 20px 0;
+        /* Grid và Card sản phẩm cũ, chỉnh lại màu nền */
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 25px; }
+        .card-product {
+            background: var(--card-bg); border-radius: 15px; overflow: hidden;
+            border: 1px solid #eee; transition: 0.4s; position: relative;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         }
-        .banner-side img {
-            width: 100%;
-            border-radius: 10px;
-            height: 100%;
-            object-fit: cover;
+        .card-product:hover {
+            transform: translateY(-10px); border-color: var(--primary-color);
+            box-shadow: 0 15px 30px rgba(0,150,136,0.15);
         }
-        .main-slider img {
-            border-radius: 10px;
-            width: 100%;
-            object-fit: cover;
-        }
+        .thumb { height: 180px; width: 100%; overflow: hidden; }
+        .thumb img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
+        .card-product:hover .thumb img { transform: scale(1.1); }
+        .card-body { padding: 20px; text-align: center; }
+        .product-name { font-size: 16px; font-weight: 700; color: var(--text-dark); margin: 0 0 10px; height: 40px; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+        .price { color: var(--old-red); font-size: 20px; font-weight: 800; margin: 10px 0; }
 
-        /* Category Cards */
-        .category-card {
-            border-radius: 10px;
-            overflow: hidden;
-            position: relative;
-            height: 100px;
-            display: flex;
-            align-items: center;
-            padding: 15px;
-            color: white;
-            transition: transform 0.3s;
-            margin-bottom: 20px;
-        }
-        .category-card:hover { transform: translateY(-5px); }
-        .bg-gradient-red { background: linear-gradient(45deg, #cb2d3e, #ef473a); }
-        .bg-gradient-green { background: linear-gradient(45deg, #11998e, #38ef7d); }
-        .bg-gradient-dark { background: linear-gradient(45deg, #232526, #414345); }
-        .bg-gradient-blue { background: linear-gradient(45deg, #000428, #004e92); }
+        /* Nút bấm (Giữ style cũ nhưng làm sáng hơn chút) */
+        .btn-custom { padding: 10px 20px; border-radius: 8px; border: none; font-weight: bold; cursor: pointer; transition: 0.3s; text-transform: uppercase; width: 100%; }
+        .btn-red { background: var(--old-red); color: white; box-shadow: 0 4px 10px rgba(255, 0, 0, 0.3); }
+        .btn-red:hover { background: #d30000; transform: translateY(-2px); }
 
-        .cat-title { font-weight: bold; font-size: 16px; text-transform: uppercase; }
-        .cat-sub { font-size: 12px; opacity: 0.9; }
+        /* --- MODAL (Chỉnh lại nền sáng) --- */
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.6); backdrop-filter: blur(5px); align-items: center; justify-content: center; }
+        .modal-content { background-color: #fff; margin: auto; padding: 30px; border: none; width: 90%; max-width: 450px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); color: var(--text-dark); }
+        .modal-header h2 { color: var(--secondary-color); text-align: center; margin-bottom: 25px; font-weight: 800; }
+        .input-group label { color: var(--text-light); font-weight: 600; }
+        .input-group input, .modal-content select { background: #f9f9f9; border: 1px solid #ddd; color: #333; }
+        .input-group input:focus, .modal-content select:focus { border-color: var(--primary-color); background: white; }
+        .auth-switch b { color: var(--primary-color); }
+        .close-modal-btn { text-align: center; margin-top: 20px; color: #888; cursor: pointer; font-weight: 600; }
+        .close-modal-btn:hover { color: var(--text-dark); }
 
-        /* Notification */
-        .noti-bar {
-            background: white;
-            padding: 15px;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-        }
+        /* Footer và các thành phần khác giữ nguyên logic nhưng chỉnh màu nền */
+        footer { background: #fff; border-top: 3px solid var(--primary-color); color: var(--text-light); }
+        footer h4 { color: var(--secondary-color) !important; }
+        footer a { color: var(--text-light) !important; }
+        footer a:hover { color: var(--primary-color) !important; }
+        
+        /* Ẩn canvas hạt nền cũ */
+        #particleCanvas { display: none; }
     </style>
 </head>
 <body>
+    <canvas id="particleCanvas"></canvas>
 
-    <div class="top-bar">
-        <div class="container d-flex justify-content-between">
-            <div>
-                <a href="#">Chính sách</a>
-                <a href="#">FAQ</a>
-                <a href="#">Liên hệ</a>
-            </div>
-            <div class="d-flex align-items-center">
-                <span class="me-3"><i class="fas fa-globe"></i> Vietnamese</span>
-                <span class="me-3">VND</span>
-                <span><i class="fas fa-sun"></i></span>
+    <header>
+        <div class="top-bar">
+            <div class="container d-flex justify-content-between align-items-center">
+                <div>
+                    <a href="#"><i class="fas fa-shield-alt me-1"></i> Chính sách bảo mật</a>
+                    <a href="#"><i class="fas fa-question-circle me-1"></i> Câu hỏi thường gặp (FAQ)</a>
+                    <a href="https://zalo.me/84788265513"><i class="fas fa-headset me-1"></i> Liên hệ hỗ trợ</a>
+                </div>
+                <div class="d-flex align-items-center">
+                    <span class="me-3"><i class="fas fa-globe me-1"></i> Tiếng Việt</span>
+                    <span class="me-3 fw-bold">VNĐ</span>
+                    <span style="cursor: pointer;"><i class="fas fa-moon"></i> Dark Mode</span>
+                </div>
             </div>
         </div>
-    </div>
 
-    <div class="header-main">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-md-2">
-                    <a href="#" class="logo text-decoration-none">
-                        <i class="fas fa-circle-notch me-2"></i> lumi
-                    </a>
-                </div>
-                
-                <div class="col-md-5">
-                    <div class="search-box">
-                        <input type="text" class="form-control" placeholder="Tìm kiếm sản phẩm...">
-                        <i class="fas fa-search"></i>
+        <div class="header-main">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-md-3">
+                        <a href="index.html" class="logo-text">
+                            HOANGKUN<span>STORE</span>
+                        </a>
                     </div>
-                </div>
+                    
+                    <div class="col-md-5">
+                        <div class="search-box">
+                            <input type="text" placeholder="Bạn đang tìm kiếm sản phẩm gì?">
+                            <button class="search-btn"><i class="fas fa-search"></i></button>
+                        </div>
+                    </div>
 
-                <div class="col-md-5 d-flex justify-content-end align-items-center">
-                    <div class="header-icons d-flex me-4">
-                        <i class="fas fa-shopping-cart"></i>
-                        <i class="fas fa-heart"></i>
-                        <i class="fas fa-comment-dots"></i>
-                    </div>
-                    <div class="user-info">
-                        <img src="https://ui-avatars.com/api/?name=Lumi+LTC&background=0D8ABC&color=fff" class="rounded-circle" width="35" height="35">
-                        <div class="d-flex flex-column" style="line-height: 1.2;">
-                            <span style="font-weight: 600;">LUMILTC</span>
-                            <span class="user-balance">0đ</span>
+                    <div class="col-md-4 header-actions">
+                        <div class="d-flex align-items-center">
+                            <div class="header-icon-link" onclick="showRecharge()">
+                                <i class="fas fa-wallet"></i>
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 10px;">Nạp</span>
+                            </div>
+                            <div class="header-icon-link">
+                                <i class="fas fa-shopping-cart"></i>
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary" style="font-size: 10px;">0</span>
+                            </div>
+                        </div>
+
+                        <div id="auth-section-header">
+                             <button class="btn btn-danger ms-4 fw-bold rounded-pill px-4" onclick="showAuth(false)">
+                                <i class="fas fa-user me-2"></i> TÀI KHOẢN
+                            </button>
+                        </div>
+
+                        <div id="user-section-header" class="user-info-box" style="display: none;" onclick="openProfile()">
+                            <img src="https://ui-avatars.com/api/?name=User&background=random" class="user-avatar" id="user-avatar-img">
+                            <div class="user-details">
+                                <span class="user-name" id="display-name-header">Khách</span>
+                                <span class="user-balance-display" id="user-balance-header">0đ</span>
+                            </div>
+                            <i class="fas fa-chevron-down ms-2 text-muted" style="font-size: 12px;"></i>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="nav-menu">
-        <div class="container d-flex justify-content-between align-items-center">
-            <div class="d-flex align-items-center">
-                <a href="#" class="nav-link"><i class="fas fa-th-large me-2"></i> Sản phẩm</a>
-                <a href="#" class="nav-link"><i class="fas fa-wallet me-2"></i> Nạp tiền <span class="badge-hot">HOT</span></a>
-                <a href="#" class="nav-link"><i class="fas fa-box me-2"></i> Đơn hàng</a>
-                <a href="#" class="nav-link"><i class="fas fa-newspaper me-2"></i> Blogs</a>
-                <a href="#" class="btn-admin ms-2"><i class="fas fa-shield-alt"></i> Admin</a>
-            </div>
-            <div class="text-end" style="font-size: 12px;">
-                <div class="fw-bold">HOTLINE 24/7</div>
-                <div>09xx.xxx.xxx</div>
+        <div class="nav-menu">
+            <div class="container d-flex justify-content-between align-items-center">
+                <nav class="d-flex align-items-center">
+                    <a href="#" class="nav-link-custom active"><i class="fas fa-home"></i> Trang chủ</a>
+                    <a href="#productGrid" class="nav-link-custom"><i class="fas fa-th-large"></i> Sản phẩm</a>
+                    <a href="#" class="nav-link-custom" onclick="showRecharge()"><i class="fas fa-wallet text-danger"></i> Nạp tiền <span class="badge-hot">HOT</span></a>
+                    <a href="#" class="nav-link-custom"><i class="fas fa-box"></i> Đơn hàng</a>
+                    <a href="#" class="nav-link-custom"><i class="fas fa-newspaper"></i> Tin tức</a>
+                </nav>
+                <div class="d-flex align-items-center py-2">
+                     <a href="#" class="btn-admin-nav me-4"><i class="fas fa-shield-alt me-2"></i> Khu vực Admin</a>
+                    <div class="text-end" style="font-size: 13px; line-height: 1.2;">
+                        <div class="fw-bold text-muted">HOTLINE HỖ TRỢ 24/7</div>
+                        <div class="fw-bold text-danger" style="font-size: 16px;">0788.265.513</div>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
+    </header>
 
     <div class="container hero-section">
         <div class="row g-3">
-            <div class="col-md-2 d-none d-md-block banner-side">
-                <img src="https://via.placeholder.com/200x400/D32F2F/FFFFFF?text=NETFLIX+19K" alt="Netflix Banner">
+            <div class="col-md-3 d-none d-md-block banner-side">
+                <img src="https://via.placeholder.com/300x400/1e3c72/FFFFFF?text=QUẢNG+CÁO+HOT+1" alt="Banner Trái">
             </div>
 
-            <div class="col-md-8">
+            <div class="col-md-6">
                 <div id="mainCarousel" class="carousel slide" data-bs-ride="carousel">
                     <div class="carousel-inner">
                         <div class="carousel-item active">
-                            <img src="https://via.placeholder.com/800x300/4facfe/FFFFFF?text=GROUP+SAN+SALE+MA+GIAM+GIA" class="d-block w-100" alt="Slider 1">
+                            <img src="https://i.postimg.cc/g2bY136T/Website-1024x538.png" class="d-block w-100" alt="Slider 1">
                         </div>
                         <div class="carousel-item">
-                            <img src="https://via.placeholder.com/800x300/00f260/FFFFFF?text=KHUYEN+MAI+NAP+TIEN" class="d-block w-100" alt="Slider 2">
+                             <img src="https://via.placeholder.com/800x450/009688/FFFFFF?text=KHUYẾN+MÃI+NẠP+TIỀN" class="d-block w-100" alt="Slider 2">
                         </div>
                     </div>
                     <button class="carousel-control-prev" type="button" data-bs-target="#mainCarousel" data-bs-slide="prev">
@@ -248,57 +323,645 @@
                 </div>
             </div>
 
-            <div class="col-md-2 d-none d-md-block banner-side">
-                <img src="https://via.placeholder.com/200x400/D32F2F/FFFFFF?text=eSIM+DU+LICH+14K" alt="eSim Banner">
+            <div class="col-md-3 d-none d-md-block banner-side">
+                 <img src="https://via.placeholder.com/300x400/ff0000/FFFFFF?text=QUẢNG+CÁO+HOT+2" alt="Banner Phải">
             </div>
         </div>
 
         <div class="row mt-4">
             <div class="col-md-3 col-6">
                 <div class="category-card bg-gradient-red">
-                    <div class="w-100">
-                        <div class="cat-title">MICROSOFT OFFICE</div>
-                        <div class="cat-sub">BẢN QUYỀN</div>
+                    <div class="cat-content">
+                        <div class="cat-title">SOURCE CODE</div>
+                        <div class="cat-sub">CHẤT LƯỢNG CAO</div>
                     </div>
-                    <i class="fab fa-windows fa-3x opacity-50"></i>
+                    <i class="fas fa-code cat-icon-bg"></i>
                 </div>
             </div>
             <div class="col-md-3 col-6">
                 <div class="category-card bg-gradient-green">
-                    <div class="w-100">
-                        <div class="cat-title">KHÁM PHÁ THẾ GIỚI AI</div>
-                        <div class="cat-sub">SIÊU TỐI ƯU</div>
+                    <div class="cat-content">
+                        <div class="cat-title">HIỆU ỨNG WEB</div>
+                        <div class="cat-sub">HTML/CSS ĐẸP MẮT</div>
                     </div>
-                    <i class="fas fa-robot fa-3x opacity-50"></i>
+                    <i class="fab fa-html5 cat-icon-bg"></i>
                 </div>
             </div>
             <div class="col-md-3 col-6">
                 <div class="category-card bg-gradient-red">
-                    <div class="w-100">
-                        <div class="cat-title">ỨNG DỤNG VPN</div>
-                        <div class="cat-sub">TỐC ĐỘ - BẢO MẬT</div>
+                    <div class="cat-content">
+                        <div class="cat-title">DỊCH VỤ KHÁC</div>
+                        <div class="cat-sub">UY TÍN - TỐC ĐỘ</div>
                     </div>
-                    <i class="fas fa-shield-alt fa-3x opacity-50"></i>
+                    <i class="fas fa-cogs cat-icon-bg"></i>
                 </div>
             </div>
             <div class="col-md-3 col-6">
                 <div class="category-card bg-gradient-green">
-                    <div class="w-100">
-                        <div class="cat-title">STEAM WALLET</div>
-                        <div class="cat-sub">SIÊU TIẾT KIỆM</div>
+                    <div class="cat-content">
+                        <div class="cat-title">NẠP TIỀN TỰ ĐỘNG</div>
+                        <div class="cat-sub">AN TOÀN - BẢO MẬT</div>
                     </div>
-                    <i class="fab fa-steam fa-3x opacity-50"></i>
+                    <i class="fas fa-university cat-icon-bg"></i>
+                </div>
+            </div>
+        </div>
+        
+        <div class="alert alert-primary d-flex align-items-center mt-2 fw-bold" role="alert" style="background: #e3f2fd; color: #0d47a1; border: none;">
+            <i class="fas fa-bullhorn me-3 fs-5"></i>
+            <div>Chào mừng bạn đến với hệ thống cung cấp Source Code uy tín hàng đầu Việt Nam!</div>
+        </div>
+    </div>
+
+
+    <div class="container" style="margin-top: 40px;">
+        <div style="background: white; border-radius: 15px; padding: 25px; box-shadow: 0 5px 20px rgba(0,0,0,0.05); margin-bottom: 40px;">
+            <h4 style="text-align: center; color: var(--secondary-color); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 25px; font-weight: 800;">
+                <i class="fas fa-trophy" style="color: gold; margin-right: 10px;"></i> 
+                TOP ĐẠI GIA NẠP TIỀN
+                <i class="fas fa-trophy" style="color: gold; margin-left: 10px;"></i>
+            </h4>
+            <div class="table-responsive">
+                <table class="table table-borderless align-middle">
+                    <thead style="background: var(--secondary-color); color: white;">
+                        <tr>
+                            <th class="text-center" style="border-top-left-radius: 10px; border-bottom-left-radius: 10px;">HẠNG</th>
+                            <th>KHÁCH HÀNG</th>
+                            <th class="text-center" style="border-top-right-radius: 10px; border-bottom-right-radius: 10px;">TỔNG NẠP</th>
+                        </tr>
+                    </thead>
+                    <tbody id="top-nap-body" style="font-weight: 600; color: #555;">
+                        </tbody>
+                </table>
+            </div>
+        </div>
+
+
+        <div class="shop-title-box">
+            <h2 class="shop-title"><i class="fas fa-fire-alt me-2"></i> Sản phẩm mới nhất</h2>
+            <a href="#" class="btn btn-outline-primary rounded-pill px-4 fw-bold">Xem tất cả <i class="fas fa-arrow-right ms-1"></i></a>
+        </div>
+        
+        <div class="grid" id="productGrid"></div>
+
+        <div id="history-section" style="display:none; margin-top: 50px; background: white; padding: 30px; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.05);">
+            <h3 style="color: var(--secondary-color); text-align: center; margin-bottom: 25px; font-weight: 800;">
+                <i class="fas fa-history me-2"></i> LỊCH SỬ GIAO DỊCH CỦA BẠN
+            </h3>
+            <table class="table table-hover align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>Tên Sản Phẩm</th>
+                        <th>Giá</th>
+                        <th>Ngày Mua</th>
+                        <th class="text-center">Hành động</th>
+                    </tr>
+                </thead>
+                <tbody id="history-body"></tbody>
+            </table>
+        </div>
+    </div>
+    
+    <footer style="margin-top: 80px; padding-top: 60px; padding-bottom: 30px;">
+        <div class="container">
+            <div class="row gy-4">
+                <div class="col-md-4">
+                    <a href="#" class="logo-text" style="font-size: 24px;">HOANGKUN<span>STORE</span></a>
+                    <p class="mt-3" style="line-height: 1.8;">
+                        Chuyên cung cấp các giải pháp Source Code Website, hiệu ứng HTML/CSS chất lượng cao. Hệ thống thanh toán tự động 24/7, an toàn và bảo mật tuyệt đối.
+                    </p>
+                </div>
+                <div class="col-md-2 col-6">
+                    <h5 class="fw-bold mb-3" style="color: var(--secondary-color);">Về chúng tôi</h5>
+                    <ul class="list-unstyled" style="line-height: 2;">
+                        <li><a href="#" class="text-decoration-none">Trang chủ</a></li>
+                        <li><a href="#" class="text-decoration-none">Giới thiệu</a></li>
+                        <li><a href="#" class="text-decoration-none">Điều khoản dịch vụ</a></li>
+                        <li><a href="#" class="text-decoration-none">Chính sách bảo mật</a></li>
+                    </ul>
+                </div>
+                 <div class="col-md-2 col-6">
+                    <h5 class="fw-bold mb-3" style="color: var(--secondary-color);">Hỗ trợ</h5>
+                    <ul class="list-unstyled" style="line-height: 2;">
+                        <li><a href="#" onclick="showRecharge()" class="text-decoration-none">Hướng dẫn nạp tiền</a></li>
+                        <li><a href="#" class="text-decoration-none">Câu hỏi thường gặp</a></li>
+                        <li><a href="https://zalo.me/84788265513" target="_blank" class="text-decoration-none">Liên hệ Zalo</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5 class="fw-bold mb-3" style="color: var(--secondary-color);">Thông tin liên hệ</h5>
+                     <ul class="list-unstyled mb-4" style="line-height: 1.8;">
+                        <li><i class="fas fa-map-marker-alt me-2 text-primary"></i> Địa chỉ: Hải Phòng, Việt Nam</li>
+                        <li><i class="fas fa-phone-alt me-2 text-primary"></i> Hotline: <span class="fw-bold text-danger">0788.265.513</span></li>
+                        <li><i class="fas fa-envelope me-2 text-primary"></i> Email: nvh12072006@gmail.com</li>
+                    </ul>
+                    <div class="d-flex gap-3">
+                        <a href="https://facebook.com/nvh12072006" class="btn btn-primary btn-sm rounded-circle"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://zalo.me/84788265513" class="btn btn-info btn-sm rounded-circle text-white"><i class="fas fa-comment-dots"></i></a>
+                        <a href="https://t.me/@kunmmo2006" class="btn btn-primary btn-sm rounded-circle" style="background: #229ed9; border:none;"><i class="fab fa-telegram-plane"></i></a>
+                    </div>
+                </div>
+            </div>
+            <hr class="my-4" style="border-color: #eee;">
+            <div class="text-center" style="font-size: 13px;">
+                 &copy; 2024 <b>HOANGKUN STORE</b>. All Rights Reserved. Thiết kế và vận hành bởi Nguyen Viet Hoang.
+            </div>
+        </div>
+    </footer>
+
+
+<div id="authModal" class="modal" style="display: none;"> <div class="modal-content">
+        <div class="modal-header" style="border: none; padding-bottom: 0;">
+             <h2 id="authTitle">ĐĂNG NHẬP</h2>
+        </div>
+        <div class="modal-body">
+            <div class="input-group mb-3" style="display: block;">
+                <label class="mb-1 d-block">Tên tài khoản</label>
+                <input type="text" id="userInput" placeholder="Nhập tên tài khoản..." class="form-control shadow-none">
+            </div>
+            <div class="input-group mb-3" style="display: block;">
+                 <label class="mb-1 d-block">Mật khẩu</label>
+                <input type="password" id="passInput" placeholder="Nhập mật khẩu..." class="form-control shadow-none">
+            </div>
+            <div id="regFields" style="display: none;">
+                <div class="input-group mb-3" style="display: block;">
+                    <label class="mb-1 d-block">Xác nhận mật khẩu</label>
+                    <input type="password" id="confirmInput" placeholder="Nhập lại mật khẩu..." class="form-control shadow-none">
+                </div>
+            </div>
+            <button class="btn-custom btn-red" style="width: 100%; margin-top: 15px;" onclick="handleAuth()">TIẾP TỤC <i class="fas fa-arrow-right ms-2"></i></button>
+            <p class="auth-switch text-center mt-3" style="font-size: 14px; color: #666;">
+                <span id="switchText">Chưa có tài khoản?</span> 
+                <b onclick="toggleAuth()" style="cursor:pointer">Đăng ký ngay</b>
+            </p>
+        </div>
+        <div class="close-modal-btn" onclick="closeModal('authModal')">Đóng cửa sổ</div>
+    </div>
+</div>
+
+<div id="rechargeModal" class="modal" style="display: none;"> <div class="modal-content" style="max-width: 550px; padding: 0; overflow: hidden; border-radius: 15px;">
+        <div style="display: flex; background: #f8f9fa; border-bottom: 1px solid #eee;">
+            <div id="re-tab0" onclick="switchRechargeTab('atm')" style="flex: 1; padding: 15px; cursor: pointer; color: var(--old-red); font-weight: bold; border-bottom: 3px solid var(--old-red); text-align: center; transition: 0.3s;">Nạp ATM/Momo</div>
+            <div id="re-tab1" onclick="switchRechargeTab('card')" style="flex: 1; padding: 15px; cursor: pointer; color: #555; font-weight: bold; text-align: center; transition: 0.3s; border-bottom: 3px solid transparent;">Nạp thẻ cào</div>
+        </div>
+
+       <div id="con-atm" style="padding: 25px; display: block; text-align: left;">
+            <div class="alert alert-warning d-flex align-items-center" role="alert" style="font-size: 13px;">
+              <i class="fas fa-info-circle me-2 fs-5"></i>
+              <div>Hệ thống cộng tiền tự động từ 1-5 phút. Nếu quá lâu vui lòng liên hệ Admin.</div>
+            </div>
+            <div style="background: #f0f7ff; border: 1px solid #cce5ff; padding: 20px; border-radius: 12px; display: flex; align-items: center; gap: 20px;">
+                <div style="flex: 1;">
+                    <p style="margin-bottom: 10px; color: #333; font-size: 15px;"><i class="fas fa-university me-2 text-primary"></i> Ngân hàng: <b>TECHCOMBANK</b></p>
+                    <p style="margin-bottom: 10px; color: #333; font-size: 15px;"><i class="fas fa-credit-card me-2 text-primary"></i> Số tài khoản: <b style="color: var(--old-red); font-size: 18px; letter-spacing: 1px;">3120720060</b> <i class="fas fa-copy ms-2" style="cursor: pointer; color: #888;" onclick="copyToClipboard('3120720060')"></i></p>
+                    <p style="margin-bottom: 10px; color: #333;"><i class="fas fa-user me-2 text-primary"></i> Chủ TK: <b>NGUYEN VIET HOANG</b></p>
+                    <div style="background: #fff3cd; padding: 10px; border-radius: 8px; border: 1px dashed #ffc107;">
+                        <p style="margin: 0; color: #856404; font-size: 14px;"><i class="fas fa-pen-square me-2"></i> Nội dung chuyển khoản bắt buộc:</p>
+                        <b id="nap-memo" style="font-size: 16px; color: var(--old-red); display: block; margin-top: 5px;">nap "tendangnhap"</b>
+                    </div>
+                </div>
+                <div style="width: 150px; text-align: center; background: #fff; padding: 10px; border-radius: 10px; border: 1px solid #eee; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+                    <img src="https://via.placeholder.com/150x150.png?text=QR+CODE" 
+                         alt="QR Nạp Tiền" 
+                         style="width: 100%; display: block; border-radius: 5px;">
+                    <span style="font-size: 11px; color: var(--primary-color); font-weight: bold; display: block; margin-top: 8px;">QUÉT MÃ ĐỂ NẠP NHANH</span>
                 </div>
             </div>
         </div>
 
-        <div class="noti-bar mt-2">
-            <i class="fas fa-bullhorn me-3 text-primary"></i>
-            <span>Hệ thống mmo uy tín hàng đầu vn</span>
-            <button type="button" class="btn-close ms-auto" aria-label="Close"></button>
+        <div id="con-card" style="padding: 25px; display: none;">
+            <select id="cardType" class="form-select mb-3 shadow-none" style="padding: 12px; border-radius: 8px;">
+                <option value="">-- Chọn loại thẻ --</option>
+                <option value="VIETTEL">Viettel (Phí 10%)</option>
+                <option value="VINAPHONE">Vinaphone (Phí 10%)</option>
+                <option value="MOBIFONE">Mobifone (Phí 10%)</option>
+            </select>
+            <select id="cardValue" class="form-select mb-3 shadow-none" style="padding: 12px; border-radius: 8px;">
+                <option value="">-- Chọn mệnh giá --</option>
+                <option value="10000">10,000đ (Nhận 9,000đ)</option>
+                <option value="20000">20,000đ (Nhận 18,000đ)</option>
+                <option value="50000">50,000đ (Nhận 45,000đ)</option>
+                <option value="100000">100,000đ (Nhận 90,000đ)</option>
+                <option value="200000">200,000đ (Nhận 180,000đ)</option>
+                <option value="500000">500,000đ (Nhận 450,000đ)</option>
+            </select>
+            <input type="text" id="cardSeri" placeholder="Nhập số Seri thẻ" class="form-control mb-3 shadow-none" style="padding: 12px; border-radius: 8px;">
+            <input type="text" id="cardPin" placeholder="Nhập mã thẻ cào" class="form-control mb-4 shadow-none" style="padding: 12px; border-radius: 8px;">
+            <button class="btn-custom btn-red" style="font-size: 16px; padding: 12px;" onclick="sendCard()">GỬI THẺ NGAY <i class="fas fa-paper-plane ms-2"></i></button>
+        </div>
+
+        <div style="padding: 15px; background: #f8f9fa; border-top: 1px solid #eee; text-align: right;">
+            <button onclick="closeModal('rechargeModal')" class="btn btn-secondary rounded-pill px-4 fw-bold">ĐÓNG LẠI</button>
         </div>
     </div>
+</div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<div class="contact-sidebar" style="position: fixed; right: 20px; bottom: 90px; z-index: 99; display: flex; flex-direction: column; gap: 10px;">
+    <a href="https://zalo.me/84788265513" target="_blank" class="contact-item" style="width: 50px; height: 50px; border-radius: 50%; display: flex; justify-content: center; align-items: center; color: white; font-size: 24px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); transition: 0.3s; background: #0068ff;">
+        <i class="fas fa-comment-dots"></i>
+    </a>
+    <a href="https://facebook.com/nvh12072006" target="_blank" class="contact-item" style="width: 50px; height: 50px; border-radius: 50%; display: flex; justify-content: center; align-items: center; color: white; font-size: 24px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); transition: 0.3s; background: #1877f2;">
+        <i class="fab fa-facebook-f"></i>
+    </a>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    // --- CÁC HÀM TIỆN ÍCH ---
+    function closeModal(id) {
+        const modal = document.getElementById(id);
+        if (modal) {
+            modal.style.display = 'none';
+        }
+    }
+    
+    // Hàm copy text
+    function copyToClipboard(text) {
+        navigator.clipboard.writeText(text).then(() => {
+            const Toast = Swal.mixin({
+                toast: true, position: 'top-end', showConfirmButton: false, timer: 2000, timerProgressBar: true
+            });
+            Toast.fire({ icon: 'success', title: 'Đã sao chép số tài khoản!' });
+        });
+    }
+
+    // --- KẾT NỐI FIREBASE ---
+    const firebaseConfig = {
+        apiKey: "AIzaSyDqpk71mVDWCP3jk7fxbHZayz92LTheY7g",
+        databaseURL: "https://hoangkun-594d0-default-rtdb.firebaseio.com",
+    };
+    if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+        
+
+    // --- LOGIC NẠP TIỀN ---
+    function switchRechargeTab(tab) {
+        // Ẩn tất cả nội dung tab
+        document.getElementById('con-atm').style.display = 'none';
+        document.getElementById('con-card').style.display = 'none';
+        
+        // Reset style các nút tab
+        document.getElementById('re-tab0').style.color = '#555';
+        document.getElementById('re-tab0').style.borderBottomColor = 'transparent';
+        document.getElementById('re-tab1').style.color = '#555';
+        document.getElementById('re-tab1').style.borderBottomColor = 'transparent';
+
+        // Hiện tab được chọn
+        if (tab === 'atm') {
+            document.getElementById('con-atm').style.display = 'block';
+            document.getElementById('re-tab0').style.color = 'var(--old-red)';
+            document.getElementById('re-tab0').style.borderBottom = '3px solid var(--old-red)';
+        } else if (tab === 'card') {
+            document.getElementById('con-card').style.display = 'block';
+            document.getElementById('re-tab1').style.color = 'var(--old-red)';
+             document.getElementById('re-tab1').style.borderBottom = '3px solid var(--old-red)';
+        }
+   } 
+
+    function showRecharge() {
+        const user = localStorage.getItem('hoangUser');
+        if (!user) return showAuth(false);
+        
+        // Sử dụng flex để căn giữa modal
+        document.getElementById('rechargeModal').style.display = 'flex';
+        switchRechargeTab('atm'); 
+
+        const memoElement = document.getElementById('nap-memo');
+        if (memoElement) {
+            memoElement.innerText = `nap "${user}"`;
+        }
+    }
+        
+    function sendCard() {
+        const user = localStorage.getItem('hoangUser');
+        const type = document.getElementById('cardType').value;
+        const value = document.getElementById('cardValue').value;
+        const seri = document.getElementById('cardSeri').value.trim();
+        const pin = document.getElementById('cardPin').value.trim();
+        
+        if(!type || !value || !seri || !pin) {
+            return Swal.fire("Lỗi", "Vui lòng chọn và nhập đầy đủ thông tin thẻ!", "error");
+        }
+
+        Swal.fire({
+            title: 'Đang gửi thẻ...',
+            html: 'Vui lòng không tắt trình duyệt.',
+            didOpen: () => { Swal.showLoading(); }
+        });
+
+        db.ref('card_requests').push({
+            username: user, cardType: type, cardValue: value, seri: seri, pin: pin, status: "pending", time: new Date().toLocaleString()
+        }).then(() => {
+            Swal.fire("Gửi thẻ thành công", "Hệ thống đang xử lý thẻ của bạn. Vui lòng chờ trong giây lát.", "success");
+            closeModal('rechargeModal');
+            document.getElementById('cardSeri').value = '';
+            document.getElementById('cardPin').value = '';
+            document.getElementById('cardType').value = '';
+             document.getElementById('cardValue').value = '';
+        }).catch(err => Swal.fire("Lỗi", "Không thể gửi thẻ lúc này: " + err.message, "error"));
+    }
+    
+
+   // --- DANH SÁCH SẢN PHẨM ---
+    const products = [
+        { id: 1, name: "SOURCE CODE TRÁI TIM TỎ TÌNH 1", price: 22000, img: "https://cellphones.com.vn/sforum/wp-content/uploads/2024/03/Huong-dan-tao-code-trai-tim-html-tang-nguoi-than-yeu-nhan-ngay-8-3-3.jpg", link: "https://www.mediafire.com/file/x82cfpep8576y2m/Code_tr%25C3%25A1i_tym_1.zip/file" },
+        { id: 2, name: "SOURCE CODE TRÁI TIM ĐẬP 2", price: 28000, img: "https://cellphones.com.vn/sforum/wp-content/uploads/2024/03/Huong-dan-tao-code-trai-tim-html-tang-nguoi-than-yeu-nhan-ngay-8-3-9.jpg", link: "https://www.mediafire.com/file/9ouog8a5ot8bbjr/Code_tr%25C3%25A1i_tym_2.zip/file" },
+        { id: 4, name: "FULL SOURCE WEB SHOP BÁN HÀNG", price: 350000, img: "https://i.postimg.cc/JzmdcN7p/game-title.jpg", link: "https://www.mediafire.com/file/kpd7vqbm7235b46/Code+website+Game.zip/file" },
+        { id: 5, name: "GAME BẮN CUNG HTML5", price: 60000, img: "https://i.postimg.cc/svBYRYkr/IMG-6222.png", link: "https://www.mediafire.com/file/fppnwb0cye4f8p7/Code_ba%25CC%2586%25CC%2581n_cung.zip/file" },
+        { id: 7, name: "HIỆU ỨNG RỒNG BAY WEB", price: 69000, img: "https://i.postimg.cc/Czfq2F8R/IMG-6224.gif", link: "https://www.mediafire.com/file/csvufyf40lrz37s/Code_hie%25CC%25A3%25CC%2582u_u%25CC%259B%25CC%2581ng_tro%25CC%2589_chuo%25CC%25A3%25CC%2582t_1.zip/file" },
+        { id: 10, name: "CODE THƯ TỎ TÌNH LÃNG MẠN", price: 50000, img: "https://i.postimg.cc/q62Czw4K/IMG-6227.gif", link: "https://www.mediafire.com/file/689n10vjdpsnnfv/Code_Thu%25CC%259B_To%25CC%2589_Ti%25CC%2580nh.zip/file" },
+        { id: 15, name: "SOURCE WEB QUẢN LÝ TRƯỜNG HỌC", price: 220000, img: "https://i.postimg.cc/G3B9xytZ/Untitled.png", link: "https://www.mediafire.com/file/xd5x96ia1g6arbv/Code+website+quản+lý+trường+học.zip/file" },
+        { id: 16, name: "WEBSITE GIỚI THIỆU CÁ NHÂN", price: 200000, img: "https://i.postimg.cc/DzqnVxw3/Untitled.png", link: "https://www.mediafire.com/file/g65sp328f6xfwvl/Code+website.zip/file" }
+    ];
+
+    function renderProducts() {
+        // Sử dụng class mới card-product và cấu trúc mới
+        document.getElementById('productGrid').innerHTML = products.map(p => `
+            <div class="card-product">
+                <div class="thumb"><img src="${p.img}" alt="${p.name}"></div>
+                <div class="card-body">
+                    <h3 class="product-name" title="${p.name}">${p.name}</h3>
+                    <div class="price">${p.price.toLocaleString()}đ</div>
+                    <button class="btn-custom btn-red" onclick="buyItem('${p.name}', ${p.price}, '${p.link}')">
+                        <i class="fas fa-shopping-cart me-2"></i> MUA NGAY
+                    </button>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    // --- LOGIC TÀI KHOẢN ---
+    let isRegisterMode = false;
+
+    function showAuth(isReg) {
+        isRegisterMode = isReg;
+        updateAuthUI();
+        // Sử dụng flex để căn giữa modal
+        document.getElementById('authModal').style.display = 'flex';
+    }
+
+    function toggleAuth() {
+        isRegisterMode = !isRegisterMode;
+        updateAuthUI();
+    }
+
+    function updateAuthUI() {
+        document.getElementById('authTitle').innerText = isRegisterMode ? "ĐĂNG KÝ TÀI KHOẢN" : "ĐĂNG NHẬP";
+        document.getElementById('regFields').style.display = isRegisterMode ? "block" : "none";
+        document.getElementById('switchText').innerText = isRegisterMode ? "Đã có tài khoản?" : "Chưa có tài khoản?";
+    }
+
+    function handleAuth() {
+        const user = document.getElementById('userInput').value.trim().toLowerCase();
+        const pass = document.getElementById('passInput').value;
+
+        if(!user || !pass) return Swal.fire("Lỗi", "Vui lòng nhập đầy đủ thông tin!", "error");
+
+        // Hiệu ứng loading
+        Swal.fire({ title: 'Đang xử lý...', didOpen: () => { Swal.showLoading(); } });
+
+        if(isRegisterMode) {
+            const confirm = document.getElementById('confirmInput').value;
+            if(pass !== confirm) return Swal.fire("Lỗi", "Mật khẩu xác nhận không khớp!", "error");
+
+            db.ref('users/' + user).once('value').then(snap => {
+                if(snap.exists()) {
+                    Swal.fire("Lỗi", "Tên tài khoản đã tồn tại, vui lòng chọn tên khác!", "error");
+                } else {
+                    db.ref('users/' + user).set({
+                        pass: pass, balance: 0, createdAt: new Date().toLocaleString()
+                    }).then(() => {
+                        Swal.fire("Thành công", "Đăng ký thành công! Bạn có thể đăng nhập ngay.", "success");
+                        isRegisterMode = false;
+                        updateAuthUI();
+                        // Tự động điền info đã dk
+                        document.getElementById('userInput').value = user;
+                        document.getElementById('passInput').value = '';
+                        document.getElementById('confirmInput').value = '';
+                    });
+                }
+            });
+        } else {
+            db.ref('users/' + user).once('value').then(snap => {
+                const data = snap.val();
+                if(data && data.pass === pass) {
+                    localStorage.setItem('hoangUser', user);
+                    Swal.fire({
+                        icon: 'success', title: 'Đăng nhập thành công!',
+                        text: 'Chào mừng bạn quay trở lại.',
+                        timer: 1500, showConfirmButton: false
+                    }).then(() => location.reload());
+                } else {
+                    Swal.fire("Lỗi", "Tên tài khoản hoặc mật khẩu không đúng!", "error");
+                }
+            });
+        }
+    }
+
+    function checkLogin() {
+        const user = localStorage.getItem('hoangUser');
+        // Các ID mới trong header
+        const authSectionHeader = document.getElementById('auth-section-header');
+        const userSectionHeader = document.getElementById('user-section-header');
+        const displayNameHeader = document.getElementById('display-name-header');
+        const userBalanceHeader = document.getElementById('user-balance-header');
+        const userAvatarImg = document.getElementById('user-avatar-img');
+
+        if(user && userSectionHeader) {
+            // Ẩn nút Tài khoản, hiện thông tin User
+            authSectionHeader.style.display = 'none';
+            userSectionHeader.style.display = 'flex';
+            document.getElementById('history-section').style.display = 'block';
+            
+            displayNameHeader.innerText = user;
+            // Tạo avatar dựa trên tên
+            userAvatarImg.src = `https://ui-avatars.com/api/?name=${user}&background=009688&color=fff&bold=true`;
+            
+            // Lắng nghe thay đổi số dư realtime
+            db.ref('users/' + user).on('value', snap => {
+                const data = snap.val();
+                if(data) {
+                    const balance = data.balance || 0;
+                    userBalanceHeader.innerText = balance.toLocaleString() + 'đ';
+                }
+            });
+            loadHistory(user);
+        }
+    }
+
+    // --- LOGIC MUA HÀNG (Bảo mật hơn: Check số dư từ Server) ---
+    function buyItem(name, price, downloadLink) {
+        const user = localStorage.getItem('hoangUser');
+        if(!user) return showAuth(false);
+
+        Swal.fire({
+            title: 'Đang kiểm tra...', didOpen: () => { Swal.showLoading(); }
+        });
+
+        // Lấy số dư thực tế từ DB
+        db.ref('users/' + user).once('value').then(snap => {
+            const userData = snap.val();
+            const currentBal = userData.balance || 0;
+
+            if(currentBal < price) {
+                return Swal.fire({
+                    icon: 'warning',
+                    title: 'Số dư không đủ!',
+                    text: `Bạn cần thêm ${(price - currentBal).toLocaleString()}đ để mua sản phẩm này.`,
+                    confirmButtonText: 'Nạp tiền ngay',
+                    showCancelButton: true,
+                    cancelButtonText: 'Để sau'
+                }).then((result) => {
+                    if (result.isConfirmed) showRecharge();
+                });
+            }
+
+            Swal.fire({
+                title: 'Xác nhận mua hàng?',
+                html: `Bạn sẽ thanh toán <b>${price.toLocaleString()}đ</b> cho sản phẩm:<br><b>${name}</b>`,
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'XÁC NHẬN MUA',
+                cancelButtonText: 'Hủy bỏ'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const newBal = currentBal - price;
+                    const now = new Date().toLocaleString();
+
+                    const updates = {};
+                    // Trừ tiền
+                    updates['users/' + user + '/balance'] = newBal;
+                    
+                    // Lưu lịch sử mua hàng
+                    const historyRef = db.ref('history/' + user).push();
+                    updates['history/' + user + '/' + historyRef.key] = {
+                        product: name, price: price, date: now, link: downloadLink, status: "Thành công"
+                    };
+
+                    // Lưu biến động số dư (nếu cần sau này cho trang profile)
+                    /*
+                    const walletRef = db.ref('wallet_history/' + user).push();
+                    updates['wallet_history/' + user + '/' + walletRef.key] = {
+                        date: now, amount: -price, balanceBefore: currentBal, balanceAfter: newBal, note: "Mua sản phẩm: " + name
+                    };
+                    */
+
+                    db.ref().update(updates).then(() => {
+                        Swal.fire({
+                            icon: 'success', title: 'Thanh toán thành công!',
+                            html: `Bạn đã mua <b>${name}</b>. Kiểm tra lịch sử phía dưới để tải về.`,
+                        });
+                        // Scroll xuống phần lịch sử
+                        document.getElementById('history-section').scrollIntoView({ behavior: 'smooth' });
+                    });
+                }
+            });
+        });
+    }
+            
+    function loadHistory(user) {
+        db.ref('history/' + user).on('value', snap => {
+            const historyBody = document.getElementById('history-body');
+            const data = snap.val();
+            if(!data) {
+                historyBody.innerHTML = '<tr><td colspan="4" class="text-center py-4 text-muted">Bạn chưa có giao dịch nào.</td></tr>';
+                return;
+            }
+
+            let html = '';
+            // Đảo ngược để hiển thị giao dịch mới nhất lên đầu
+            Object.values(data).reverse().forEach(item => {
+                html += `<tr>
+                    <td class="fw-bold">${item.product}</td>
+                    <td class="text-danger fw-bold">${(item.price || 0).toLocaleString()}đ</td>
+                    <td class="text-muted small">${item.date}</td>
+                    <td class="text-center">
+                        <a href="${item.link || '#'}" target="_blank" 
+                           class="btn btn-sm btn-success fw-bold">
+                           <i class="fas fa-download me-1"></i> TẢI VỀ
+                        </a>
+                    </td>
+                </tr>`;
+            });
+            historyBody.innerHTML = html;
+        });
+    }
+
+    // Hàm logout (tạm thời gán vào sự kiện click user info)
+    function openProfile() {
+        const user = localStorage.getItem('hoangUser');
+        if(!user) return;
+        
+        Swal.fire({
+            title: `Xin chào, ${user}!`,
+            text: "Bạn muốn làm gì tiếp theo?",
+            icon: 'info',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Đăng xuất',
+            cancelButtonText: 'Đóng'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                localStorage.removeItem('hoangUser');
+                Swal.fire("Đã đăng xuất", "Hẹn gặp lại bạn!", "success").then(() => location.reload());
+            }
+        })
+    }
+
+    // --- LOAD DỮ LIỆU TOP NẠP (Giữ nguyên logic) ---
+    function loadTopTen() {
+        db.ref('users').on('value', snap => {
+            const users = snap.val();
+            if (!users) return;
+
+            let userArray = [];
+            for (let username in users) {
+                // Giả sử 'balance' là tổng nạp để demo, thực tế bạn nên có trường 'total_deposited' riêng
+                userArray.push({ name: username, balance: users[username].balance || 0 });
+            }
+
+            // Sắp xếp giảm dần
+            userArray.sort((a, b) => b.balance - a.balance);
+            const top10 = userArray.slice(0, 10);
+
+            let html = '';
+            top10.forEach((user, index) => {
+                let rank = index + 1;
+                let icon = `#${rank}`;
+                let rowClass = "";
+                let rankStyle = "font-weight: bold; color: #888;";
+
+                if (rank === 1) { icon = '🥇'; rowClass = "bg-light-warning"; rankStyle="font-size: 1.2em;"; }
+                else if (rank === 2) { icon = '🥈'; rankStyle="font-size: 1.1em;"; }
+                else if (rank === 3) { icon = '🥉'; rankStyle="font-size: 1.1em;"; }
+
+                html += `
+                    <tr class="${rowClass}" style="border-bottom: 1px solid #f0f0f0;">
+                        <td class="text-center" style="${rankStyle}">${icon}</td>
+                        <td class="fw-bold" style="color: var(--secondary-color);">${user.name}</td>
+                        <td class="text-center text-danger fw-bold">
+                            ${user.balance.toLocaleString()}đ
+                        </td>
+                    </tr>
+                `;
+            });
+            document.getElementById('top-nap-body').innerHTML = html || '<tr><td colspan="3" class="text-center">Chưa có dữ liệu</td></tr>';
+        });
+    }
+
+    // --- KHỞI CHẠY ---
+    window.onload = () => {
+        renderProducts();
+        checkLogin();
+        loadTopTen();
+        // Tắt hiệu ứng hạt nền cũ nếu còn sót
+        const canvas = document.getElementById('particleCanvas');
+        if(canvas) canvas.style.display = 'none';
+    };
+</script>
+
 </body>
 </html>

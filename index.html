@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShopMCuong - Shop Acc Uy Tín</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <img src="https://i.imgur.com/example-logo.png" alt="Logo Shop"> </div>
+            <nav>
+                <a href="#">TRANG CHỦ</a>
+                <a href="#">DANH MỤC GAME <i class="fas fa-chevron-down"></i></a>
+                <a href="#">TIẾP THỊ LIÊN KẾT <i class="fas fa-chevron-down"></i></a>
+                <a href="#">TIN TỨC</a>
+            </nav>
+            <div class="header-actions">
+                <a href="#" class="btn-topup"><i class="fas fa-dollar-sign"></i> Nạp tiền</a>
+                <a href="#" class="btn-login"><i class="fas fa-user"></i> Đăng nhập / Đăng ký</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="yellow-bar">
+        SHOP CHÍNH THỨC CỦA HOANGKUN
+    </div>
+
+    <div class="container main-hero">
+        
+        <div class="topup-box">
+            <div class="topup-header">
+                <i class="fas fa-trophy"></i> TOP NẠP T.02
+            </div>
+            <div class="topup-tabs">
+                <div class="tab active" onclick="switchTab('napthe')">Nạp thẻ</div>
+                <div class="tab" onclick="switchTab('topnap')">Top nạp</div>
+                <div class="tab" onclick="switchTab('phanthuong')">Phần thưởng</div>
+            </div>
+
+            <div id="napthe-content" class="tab-content active">
+                <select class="form-control">
+                    <option>Chọn nhà mạng</option>
+                    <option>Viettel</option>
+                    <option>Vinaphone</option>
+                    <option>Mobifone</option>
+                </select>
+                <select class="form-control">
+                    <option>Chọn mệnh giá</option>
+                    <option>10.000đ</option>
+                    <option>20.000đ</option>
+                    <option>50.000đ</option>
+                    <option>100.000đ</option>
+                </select>
+                <div class="row-input">
+                    <input type="text" class="form-control" placeholder="Mã thẻ">
+                    <input type="text" class="form-control" placeholder="Serial">
+                </div>
+                <button class="btn-submit-topup">Nạp Ngay</button>
+            </div>
+        </div>
+
+        <div class="banner-box">
+            <img src="https://shopmcuong.com/storage/images/banners/banner_01.jpg" alt="Banner Shop">
+        </div>
+    </div>
+
+    <div class="container product-section">
+        <div class="section-title">
+            <h3><i class="fas fa-fire"></i> Xé Túi Mù Cực Hot</h3>
+            <a href="#" class="btn-view-all">Khám phá</a>
+        </div>
+
+        <div class="product-grid">
+            <div class="product-card">
+                <div class="badge-new">NEW</div>
+                <img src="https://i.imgur.com/example-product.jpg" alt="SP"> <div class="p-info">
+                    <div class="p-name">Túi Mù 20K khuyến mãi</div>
+                    <div class="p-stock">Tài khoản hiện có: <b>55</b></div>
+                    <div class="p-price">
+                        <span class="old">40.000đ</span>
+                        <span class="new">20.000đ</span>
+                    </div>
+                    <div class="p-action">
+                        <button class="btn-buy">MUA NGAY</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="badge-new">HOT</div>
+                <img src="https://i.imgur.com/example-product.jpg" alt="SP">
+                <div class="p-info">
+                    <div class="p-name">Túi Mù 49 Cá</div>
+                    <div class="p-stock">Tài khoản hiện có: <b>24</b></div>
+                    <div class="p-price">
+                        <span class="old">99.000đ</span>
+                        <span class="new">49.000đ</span>
+                    </div>
+                    <div class="p-action">
+                        <button class="btn-buy">MUA NGAY</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <img src="https://i.imgur.com/example-product.jpg" alt="SP">
+                <div class="p-info">
+                    <div class="p-name">Túi Mù 99k</div>
+                    <div class="p-stock">Tài khoản hiện có: <b>13</b></div>
+                    <div class="p-price">
+                        <span class="old">198.000đ</span>
+                        <span class="new">99.000đ</span>
+                    </div>
+                    <div class="p-action">
+                        <button class="btn-buy">MUA NGAY</button>
+                    </div>
+                </div>
+            </div>
+
+             <div class="product-card">
+                <div class="badge-new">VIP</div>
+                <img src="https://i.imgur.com/example-product.jpg" alt="SP">
+                <div class="p-info">
+                    <div class="p-name">Túi Mù Vệ Thần</div>
+                    <div class="p-stock">Tài khoản hiện có: <b>9</b></div>
+                    <div class="p-price">
+                        <span class="old">1.999.000đ</span>
+                        <span class="new">999.000đ</span>
+                    </div>
+                    <div class="p-action">
+                        <button class="btn-buy">MUA NGAY</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="floating-buttons">
+        <a href="#" class="float-btn phone"><i class="fas fa-phone"></i></a>
+        <a href="#" class="float-btn mess"><i class="fab fa-facebook-messenger"></i></a>
+        <a href="#" class="float-btn zalo">Zalo</a>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

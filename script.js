@@ -35,3 +35,48 @@ document.querySelectorAll('.btn-buy').forEach(btn => {
         alert("Vui lòng đăng nhập để mua hàng!");
     });
 });
+
+// --- XỬ LÝ POPUP LOGIN / REGISTER ---
+
+// 1. Hàm bật/tắt Popup
+function toggleLogin() {
+    const modal = document.getElementById('auth-modal');
+    // Nếu đang ẩn thì hiện, đang hiện thì ẩn
+    if (modal.style.display === 'flex') {
+        modal.style.display = 'none';
+    } else {
+        modal.style.display = 'flex';
+    }
+}
+
+// 2. Hàm chuyển đổi qua lại giữa Đăng Nhập & Đăng Ký
+function switchAuth(type) {
+    const formLogin = document.getElementById('form-login');
+    const formRegister = document.getElementById('form-register');
+    const tabLogin = document.getElementById('tab-login');
+    const tabRegister = document.getElementById('tab-register');
+
+    if (type === 'login') {
+        // Hiện form đăng nhập
+        formLogin.style.display = 'block';
+        formRegister.style.display = 'none';
+        // Đổi màu tab
+        tabLogin.classList.add('active');
+        tabRegister.classList.remove('active');
+    } else {
+        // Hiện form đăng ký
+        formLogin.style.display = 'none';
+        formRegister.style.display = 'block';
+        // Đổi màu tab
+        tabLogin.classList.remove('active');
+        tabRegister.classList.add('active');
+    }
+}
+
+// 3. (Tùy chọn) Bấm ra ngoài khoảng trắng để đóng popup
+window.onclick = function(event) {
+    const modal = document.getElementById('auth-modal');
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}

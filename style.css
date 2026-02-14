@@ -1,5 +1,13 @@
 * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-body { background-color: #f4f7f6; color: #333; }
+
+/* Đã thêm flexbox vào body để đẩy footer xuống đáy */
+body { 
+    background-color: #f4f7f6; 
+    color: #333; 
+    display: flex; 
+    flex-direction: column; 
+    min-height: 100vh; 
+}
 
 /* Navbar Style */
 .navbar { background-color: #1a252f; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 10px rgba(0,0,0,0.2); position: sticky; top: 0; z-index: 100; }
@@ -10,7 +18,8 @@ body { background-color: #f4f7f6; color: #333; }
 .nav-btn.active { color: #fff; background-color: #3498db; box-shadow: 0 0 20px rgba(52, 152, 219, 0.8); border: 1px solid #2980b9; }
 
 /* Main Content & Hero */
-.container { padding: 40px; max-width: 1200px; margin: 0 auto; }
+/* Đã thêm flex: 1 vào container để nó tự giãn chiều cao */
+.container { padding: 40px; max-width: 1200px; margin: 0 auto; flex: 1; width: 100%; }
 .hero-section { text-align: center; background: linear-gradient(135deg, #2c3e50, #3498db); color: white; padding: 80px 20px; border-radius: 15px; margin-bottom: 40px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
 .hero-section h1 { font-size: 36px; margin-bottom: 20px; }
 .hero-section p { font-size: 18px; margin-bottom: 30px; opacity: 0.9; }
@@ -40,7 +49,7 @@ body { background-color: #f4f7f6; color: #333; }
 .read-more { text-decoration: none; color: #3498db; font-weight: bold; }
 
 /* Footer */
-.footer { background-color: #1a252f; color: #ecf0f1; padding: 50px 0 0 0; margin-top: 60px; }
+.footer { background-color: #1a252f; color: #ecf0f1; padding: 50px 0 0 0; margin-top: 60px; width: 100%; }
 .footer-content { display: flex; justify-content: space-around; flex-wrap: wrap; max-width: 1200px; margin: 0 auto; padding-bottom: 30px; gap: 20px; }
 .footer-info h3, .footer-links h3 { color: #f1c40f; margin-bottom: 20px; }
 .footer-info p { margin-bottom: 10px; }
@@ -48,11 +57,11 @@ body { background-color: #f4f7f6; color: #333; }
 .footer-links ul { list-style: none; }
 .footer-links a { color: #ecf0f1; text-decoration: none; }
 .footer-links a:hover { color: #3498db; }
-.footer-bottom { background-color: #0d1318; text-align: center; padding: 20px; font-size: 0.9em; }
+.footer-bottom { background-color: #0d1318; text-align: center; padding: 20px; font-size: 0.9em; width: 100%; }
 
 /* Các trang khác (Auth, Tracuudiem, Gioithieu) sẽ dùng chung file này */
 /* Trang Auth */
-.auth-container { display: flex; justify-content: center; align-items: center; min-height: 80vh; padding: 20px; }
+.auth-container { display: flex; justify-content: center; align-items: center; flex: 1; padding: 20px; }
 .auth-box { background: white; width: 100%; max-width: 400px; padding: 30px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
 .auth-toggle { display: flex; margin-bottom: 25px; background: #ecf0f1; border-radius: 30px; overflow: hidden; }
 .toggle-btn { flex: 1; padding: 12px; border: none; background: transparent; font-size: 16px; font-weight: bold; color: #7f8c8d; cursor: pointer; transition: 0.3s; }

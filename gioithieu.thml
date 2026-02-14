@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thông Tin Khoa - Hệ Thống Quản Lý</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="logo">
+            <i class="fas fa-school"></i> TRƯỜNG CAO ĐẲNG KĨ THUẬT
+        </div>
+        <div class="menu">
+            <a href="index.html" class="nav-btn"><i class="fas fa-home"></i> Trang Chủ</a>
+            <a href="gioithieu.html" class="nav-btn"><i class="fas fa-info-circle"></i> Thông Tin Khoa</a>
+            <a href="tracuudiem.html" class="nav-btn"><i class="fas fa-search"></i> Tra Cứu Điểm</a>
+        </div>
+    </nav>
+
+    <header class="about-header">
+        <h1>Về Chúng Tôi</h1>
+        <p>Kiến tạo tương lai, Khơi nguồn sáng tạo</p>
+    </header>
+
+    <main class="container">
+        <section class="about-section">
+            <div class="about-content">
+                <h2 class="section-title">Lịch Sử & Sứ Mệnh</h2>
+                <p>Được thành lập với mục tiêu mang lại môi trường giáo dục chất lượng cao, TRƯỜNG CAO ĐẲNG KĨ THUẬT tự hào là một trong những đơn vị đào tạo hàng đầu.</p>
+                <p>Chúng tôi tập trung vào thực hành, giúp sinh viên trang bị kiến thức vững vàng và kỹ năng thực tế nhất để tự tin bước vào đời.</p>
+            </div>
+            <div class="about-image">
+                <img src="https://images.unsplash.com/photo-1541339907198-e08756dedf3f?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Khuôn viên trường">
+            </div>
+        </section>
+
+        <section class="core-values">
+            <div class="value-box">
+                <i class="fas fa-eye"></i>
+                <h3>Tầm Nhìn</h3>
+                <p>Trở thành trung tâm đào tạo đa ngành hàng đầu khu vực.</p>
+            </div>
+            <div class="value-box">
+                <i class="fas fa-bullseye"></i>
+                <h3>Sứ Mệnh</h3>
+                <p>Đào tạo nguồn nhân lực chất lượng cao đáp ứng nhu cầu xã hội.</p>
+            </div>
+            <div class="value-box">
+                <i class="fas fa-heart"></i>
+                <h3>Giá Trị Cốt Lõi</h3>
+                <p>Sáng tạo - Chuyên nghiệp - Tận tâm - Trách nhiệm.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-bottom">
+            <p>&copy; 2026 Hệ thống quản lý trường học. Thiết kế và phát triển bởi HOANGKUN.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

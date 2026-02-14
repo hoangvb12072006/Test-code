@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng Nhập - Hệ Thống Quản Lý Trường Học</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="logo">
+            <i class="fas fa-school"></i> TRƯỜNG THPT HOÀNG KUN
+        </div>
+        <div class="menu">
+            <a href="index.html" class="nav-btn"><i class="fas fa-home"></i> Trang Chủ</a>
+            <a href="gioithieu.html" class="nav-btn"><i class="fas fa-info-circle"></i> Thông Tin</a>
+            <a href="login.html" class="nav-btn active"><i class="fas fa-user"></i> Đăng Nhập/Đăng Ký</a>
+            <a href="dashboard.html" class="nav-btn"><i class="fas fa-cogs"></i> Quản Lý</a>
+        </div>
+    </nav>
+
+    <main class="auth-container">
+        <div class="auth-box">
+            <div class="auth-toggle">
+                <button class="toggle-btn active" onclick="showLogin()">Đăng Nhập</button>
+                <button class="toggle-btn" onclick="showRegister()">Đăng Ký</button>
+            </div>
+
+            <form id="loginForm" class="auth-form">
+                <h2>Chào mừng trở lại!</h2>
+                <div class="input-group">
+                    <i class="fas fa-user"></i>
+                    <input type="text" placeholder="Tên đăng nhập" required>
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" placeholder="Mật khẩu" required>
+                </div>
+                <button type="submit" class="auth-submit" onclick="window.location.href='dashboard.html'; return false;">Đăng Nhập</button>
+            </form>
+
+            <form id="registerForm" class="auth-form" style="display: none;">
+                <h2>Tạo tài khoản mới</h2>
+                <div class="input-group">
+                    <i class="fas fa-id-badge"></i>
+                    <input type="text" placeholder="Mã học sinh / Giáo viên" required>
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-user"></i>
+                    <input type="text" placeholder="Tên đăng nhập" required>
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" placeholder="Mật khẩu" required>
+                </div>
+                <button type="submit" class="auth-submit" onclick="alert('Đăng ký thành công! Vui lòng đăng nhập.'); showLogin(); return false;">Đăng Ký</button>
+            </form>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+    <script>
+        // Script nhỏ xử lý chuyển đổi qua lại giữa 2 form
+        function showLogin() {
+            document.getElementById('loginForm').style.display = 'block';
+            document.getElementById('registerForm').style.display = 'none';
+            document.querySelectorAll('.toggle-btn')[0].classList.add('active');
+            document.querySelectorAll('.toggle-btn')[1].classList.remove('active');
+        }
+        function showRegister() {
+            document.getElementById('loginForm').style.display = 'none';
+            document.getElementById('registerForm').style.display = 'block';
+            document.querySelectorAll('.toggle-btn')[0].classList.remove('active');
+            document.querySelectorAll('.toggle-btn')[1].classList.add('active');
+        }
+    </script>
+</body>
+</html>

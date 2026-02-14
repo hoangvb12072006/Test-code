@@ -98,3 +98,59 @@ body {
 .core-values { display: flex; gap: 30px; margin-bottom: 60px; }
 .value-box { flex: 1; text-align: center; background: white; padding: 40px 20px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); border-bottom: 4px solid #3498db; }
 .value-box i { font-size: 3em; color: #3498db; margin-bottom: 20px; }
+
+/* =========================================
+   BỔ SUNG: CSS CHO CÁC NGÀNH ĐÀO TẠO
+   ========================================= */
+.majors-section {
+    margin-top: 60px;
+    margin-bottom: 40px;
+}
+
+.majors-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.major-card {
+    background: white;
+    padding: 40px 30px;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Hiệu ứng nảy (bouncing) xịn xò */
+    border-bottom: 4px solid transparent;
+}
+
+/* Hiệu ứng rê chuột: Thẻ nảy lên, viền dưới hiện màu, bóng tỏa rộng */
+.major-card:hover {
+    transform: translateY(-15px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+    border-bottom: 4px solid #3498db;
+}
+
+.major-card i {
+    font-size: 3.5em;
+    color: #3498db;
+    margin-bottom: 20px;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+/* Đưa chuột vào icon cũng tự phóng to và đổi màu */
+.major-card:hover i {
+    transform: scale(1.15) rotate(5deg);
+    color: #f1c40f;
+}
+
+.major-card h3 {
+    color: #2c3e50;
+    margin-bottom: 15px;
+    font-size: 1.4em;
+}
+
+.major-card p {
+    color: #666;
+    line-height: 1.6;
+}

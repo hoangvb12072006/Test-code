@@ -3,260 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HOANGKUN STORE - Thế Giới Source Code Neon</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <style>
-        /* --- CẤU HÌNH MÀU SẮC NEON --- */
-        :root {
-            /* Màu neon chủ đạo (Xanh Cyan) - Bạn có thể đổi thành màu khác */
-            --neon-color: #00f7ff; 
-            /* Màu nền tối */
-            --bg-dark: #050505;
-            --bg-card: #101010;
-            --text-light: #ffffff;
-            --text-gray: #a0a0a0;
-        }
-
-        /* --- RESET & BASE STYLES --- */
-        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: var(--bg-dark);
-            color: var(--text-light);
-            overflow-x: hidden;
-            /* Hiệu ứng nền nhẹ */
-            background-image: radial-gradient(circle at 50% 50%, #1a1a1a 0%, var(--bg-dark) 100%);
-        }
-        h1, h2, h3, .logo { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
-        a { text-decoration: none; color: inherit; transition: all 0.3s ease; }
-        ul { list-style: none; }
-        .container { width: 90%; max-width: 1200px; margin: auto; }
-        .section-padding { padding: 80px 0; }
-        .text-neon { color: var(--neon-color); text-shadow: 0 0 10px rgba(0, 247, 255, 0.5); }
-        .text-center { text-align: center; }
-
-        /* --- HIỆU ỨNG PHÁT SÁNG (GLOW) CHỦ ĐẠO --- */
-        .glow-effect {
-            transition: all 0.3s ease-in-out;
-        }
-        .glow-effect:hover {
-             /* Tạo nhiều lớp bóng để làm hiệu ứng neon */
-            box-shadow: 0 0 10px var(--neon-color),
-                        0 0 20px var(--neon-color),
-                        0 0 40px var(--neon-color);
-            border-color: var(--neon-color) !important;
-            transform: translateY(-5px) scale(1.02);
-        }
-
-        /* --- NÚT BẤM NEON --- */
-        .btn-neon {
-            display: inline-block;
-            padding: 12px 30px;
-            background: transparent;
-            color: var(--neon-color);
-            border: 2px solid var(--neon-color);
-            font-family: 'Orbitron', sans-serif;
-            font-weight: bold;
-            text-transform: uppercase;
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-            transition: all 0.4s;
-             /* Hiệu ứng sáng mặc định nhẹ */
-            box-shadow: 0 0 5px rgba(0, 247, 255, 0.2);
-        }
-        /* Khi di chuột vào nút */
-        .btn-neon:hover {
-            background: var(--neon-color);
-            color: var(--bg-dark);
-            box-shadow: 0 0 20px var(--neon-color), 0 0 50px var(--neon-color);
-        }
-
-        /* --- NAVBAR --- */
-        .navbar {
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 20px 5%; position: fixed; width: 100%; top: 0; z-index: 100;
-            background: rgba(5, 5, 5, 0.8); backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(0, 247, 255, 0.1);
-        }
-        .logo { font-size: 1.8rem; font-weight: 700; }
-        .nav-links { display: flex; gap: 30px; }
-        .nav-links a:hover { color: var(--neon-color); text-shadow: 0 0 5px var(--neon-color); }
-        .menu-btn { display: none; font-size: 1.5rem; cursor: pointer; color: var(--neon-color); }
-
-        /* --- HERO SECTION (TRANG CHỦ) --- */
-        #hero {
-            height: 100vh; display: flex; align-items: center; justify-content: center;
-            text-align: center; padding-top: 60px;
-            /* Ảnh nền cyberpunk mờ */
-            background: linear-gradient(rgba(5,5,5,0.7), rgba(5,5,5,0.9)), url('https://images.unsplash.com/photo-1536532184021-da4272956513?q=80&w=2069&auto=format&fit=crop');
-            background-size: cover; background-position: center;
-        }
-        .hero-content h1 { font-size: 4rem; margin-bottom: 20px; line-height: 1.2; }
-        .hero-content p { font-size: 1.2rem; color: var(--text-gray); margin-bottom: 40px; max-width: 600px; margin-left: auto; margin-right: auto;}
-
-        /* --- PRODUCTS SECTION (SẢN PHẨM) --- */
-        .section-title { font-size: 2.5rem; margin-bottom: 60px; position: relative; }
-        /* Đường gạch chân phát sáng dưới tiêu đề */
-        .section-title::after {
-            content: ''; position: absolute; bottom: -15px; left: 50%; transform: translateX(-50%);
-            width: 80px; height: 3px; background: var(--neon-color);
-            box-shadow: 0 0 10px var(--neon-color);
-        }
-        .product-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px;
-        }
-        /* THẺ SẢN PHẨM (Cái quan trọng nhất) */
-        .product-card {
-            background: var(--bg-card);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 15px; overflow: hidden; position: relative;
-            /* Thêm class glow-effect ở HTML để kích hoạt hiệu ứng */
-        }
-        .product-img-box { height: 220px; overflow: hidden; position: relative;}
-        .product-img-box img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
-        /* Hiệu ứng phóng to ảnh khi hover thẻ */
-        .product-card:hover .product-img-box img { transform: scale(1.1); }
-        
-        .product-content { padding: 25px; }
-        .product-content h3 { margin-bottom: 10px; font-size: 1.4rem; }
-        .product-desc { color: var(--text-gray); font-size: 0.9rem; margin-bottom: 20px; }
-        .product-footer { display: flex; justify-content: space-between; align-items: center; }
-        .price { font-family: 'Orbitron', sans-serif; font-size: 1.5rem; color: var(--neon-color); text-shadow: 0 0 5px var(--neon-color); }
-        
-        /* Badge HOT/NEW */
-        .badge {
-            position: absolute; top: 15px; right: 15px;
-            background: var(--neon-color); color: var(--bg-dark);
-            padding: 5px 12px; border-radius: 20px; font-weight: bold; font-size: 0.8rem;
-            box-shadow: 0 0 10px var(--neon-color); z-index: 2;
-        }
-
-        /* --- FOOTER --- */
-        footer { background: #020202; padding: 40px 0; text-align: center; border-top: 1px solid rgba(0, 247, 255, 0.2); }
-        .social-icons a { font-size: 1.5rem; margin: 0 15px; color: var(--text-gray); }
-        .social-icons a:hover { color: var(--neon-color); text-shadow: 0 0 10px var(--neon-color); }
-        .copyright { margin-top: 20px; color: var(--text-gray); font-size: 0.9rem; }
-
-        /* --- RESPONSIVE MOBILE --- */
-        @media (max-width: 768px) {
-            .menu-btn { display: block; }
-            .nav-links {
-                position: fixed; top: 70px; right: -100%; width: 70%; height: 100vh;
-                background: var(--bg-card); flex-direction: column; align-items: center;
-                padding-top: 50px; transition: 0.4s; border-left: 1px solid var(--neon-color);
-            }
-            .nav-links.active { right: 0; }
-            .hero-content h1 { font-size: 2.5rem; }
-        }
-    </style>
+    <title>Hệ Thống Quản Lý Trường Học</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
 <body>
 
     <nav class="navbar">
-        <a href="#" class="logo">HOANGKUN<span class="text-neon">STORE</span></a>
-        <ul class="nav-links">
-            <li><a href="#hero">Trang chủ</a></li>
-            <li><a href="#products">Sản phẩm</a></li>
-            <li><a href="#contact">Liên hệ</a></li>
-            <li><a href="#" class="btn-neon glow-effect" style="padding: 8px 20px;">Đăng nhập</a></li>
-        </ul>
-        <div class="menu-btn"><i class="fa-solid fa-bars"></i></div>
+        <div class="logo">
+            <i class="fas fa-school"></i> TRƯỜNG THPT HOÀNG KUN
+        </div>
+        <div class="menu">
+            <a href="index.html" class="nav-btn active"><i class="fas fa-home"></i> Trang Chủ</a>
+            <a href="gioithieu.html" class="nav-btn"><i class="fas fa-info-circle"></i> Thông Tin</a>
+            <a href="login.html" class="nav-btn"><i class="fas fa-user"></i> Đăng Nhập/Đăng Ký</a>
+            <a href="dashboard.html" class="nav-btn"><i class="fas fa-cogs"></i> Quản Lý</a>
+        </div>
     </nav>
 
-    <section id="hero">
-        <div class="hero-content container">
-            <h1>THẾ GIỚI CODE <br><span class="text-neon">CYBERPUNK</span></h1>
-            <p>Cung cấp Source Code chất lượng cao, giao diện hiện đại, bảo mật tuyệt đối. Nâng tầm dự án của bạn ngay hôm nay.</p>
-            <a href="#products" class="btn-neon glow-effect" style="font-size: 1.2rem; padding: 15px 40px;">
-                KHÁM PHÁ NGAY <i class="fa-solid fa-arrow-right"></i>
-            </a>
-        </div>
-    </section>
+    <main class="container">
+        <section class="hero-section">
+            <h1>Chào mừng đến với Hệ thống Trường học Hiện đại</h1>
+            <p>Nơi ươm mầm tài năng và phát triển tương lai. Hệ thống hỗ trợ quản lý học sinh, giáo viên và thông tin toàn diện.</p>
+            <button class="action-btn" onclick="window.location.href='login.html'">Bắt đầu ngay</button>
+        </section>
 
-    <section id="products" class="section-padding container">
-        <h2 class="section-title text-center">SẢN PHẨM <span class="text-neon">HOT</span></h2>
-        
-        <div class="product-grid">
-            <div class="product-card glow-effect">
-                <div class="product-img-box">
-                    <span class="badge">BEST SELLER</span>
-                    <img src="https://via.placeholder.com/400x300/101010/00f7ff?text=Vong+Quay+Cyber" alt="Code Vòng Quay">
-                </div>
-                <div class="product-content">
-                    <h3>Source Code Vòng Quay Neon</h3>
-                    <p class="product-desc">Giao diện Cyberpunk cực chất, full chức năng, dễ cài đặt.</p>
-                    <div class="product-footer">
-                        <div class="price">150K</div>
-                        <a href="spin.html" class="btn-neon glow-effect" style="padding: 8px 15px; font-size: 0.9rem;">
-                            <i class="fa-solid fa-cart-shopping"></i> Mua
-                        </a>
-                    </div>
-                </div>
+        <section class="features">
+            <div class="feature-card">
+                <i class="fas fa-book-reader"></i>
+                <h3>Đào Tạo Chất Lượng</h3>
+                <p>Chương trình học chuẩn quốc gia kết hợp kỹ năng mềm.</p>
             </div>
-
-            <div class="product-card glow-effect">
-                <div class="product-img-box">
-                    <span class="badge" style="background: #ff0055;">NEW</span>
-                    <img src="https://via.placeholder.com/400x300/101010/ff0055?text=Web+Shop+Acc" alt="Code Shop Acc">
-                </div>
-                <div class="product-content">
-                    <h3>Web Bán Acc Tự Động Pro</h3>
-                    <p class="product-desc">Hệ thống nạp thẻ tự động, bảo mật cao, admin panel xịn.</p>
-                    <div class="product-footer">
-                        <div class="price">500K</div>
-                        <a href="#" class="btn-neon glow-effect" style="padding: 8px 15px; font-size: 0.9rem;">
-                            <i class="fa-solid fa-cart-shopping"></i> Mua
-                        </a>
-                    </div>
-                </div>
+            <div class="feature-card">
+                <i class="fas fa-laptop-code"></i>
+                <h3>Hệ Thống Thông Minh</h3>
+                <p>Quản lý điểm số, lịch học và thông tin trực tuyến 24/7.</p>
             </div>
-
-             <div class="product-card glow-effect">
-                <div class="product-img-box">
-                    <img src="https://via.placeholder.com/400x300/101010/00f7ff?text=Lixi+May+Man" alt="Code Lì Xì">
-                </div>
-                <div class="product-content">
-                    <h3>Source Code Bốc Lì Xì Online</h3>
-                    <p class="product-desc">Sự kiện Tết, random quà tặng, thu hút tương tác cực tốt.</p>
-                    <div class="product-footer">
-                        <div class="price">99K</div>
-                        <a href="#" class="btn-neon glow-effect" style="padding: 8px 15px; font-size: 0.9rem;">
-                            <i class="fa-solid fa-cart-shopping"></i> Mua
-                        </a>
-                    </div>
-                </div>
+            <div class="feature-card">
+                <i class="fas fa-users"></i>
+                <h3>Cộng Đồng Sôi Động</h3>
+                <p>Hoạt động ngoại khóa đa dạng, phát triển toàn diện.</p>
             </div>
-        </div>
-    </section>
+        </section>
+    </main>
 
-    <footer id="contact">
-        <div class="container">
-            <div class="logo" style="margin-bottom: 20px;">HOANGKUN<span class="text-neon">STORE</span></div>
-            <div class="social-icons">
-                <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
-                <a href="#"><i class="fa-brands fa-discord"></i></a>
-                <a href="#"><i class="fa-brands fa-telegram"></i></a>
-            </div>
-            <p class="copyright">© 2024 HoangKunStore. Design by You.</p>
-        </div>
-    </footer>
-
-    <script>
-        const menuBtn = document.querySelector('.menu-btn');
-        const navLinks = document.querySelector('.nav-links');
-        // Bấm nút menu thì hiện/ẩn danh sách link trên điện thoại
-        menuBtn.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
-        });
-        // Bấm vào link xong thì tự đóng menu lại
-        document.querySelectorAll('.nav-links li a').forEach(link => {
-            link.addEventListener('click', () => {
-                navLinks.classList.remove('active');
-            });
-        });
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>

@@ -49,14 +49,14 @@ body {
 .nav-btn:hover {
     color: #fff;
     background-color: rgba(255, 255, 255, 0.1);
-    box-shadow: 0 0 15px rgba(52, 152, 219, 0.6); /* Hiệu ứng phát sáng khi hover */
+    box-shadow: 0 0 15px rgba(52, 152, 219, 0.6);
     transform: translateY(-2px);
 }
 
 .nav-btn.active {
     color: #fff;
     background-color: #3498db;
-    box-shadow: 0 0 20px rgba(52, 152, 219, 0.8); /* Hiệu ứng phát sáng mạnh cho nút đang chọn */
+    box-shadow: 0 0 20px rgba(52, 152, 219, 0.8);
     border: 1px solid #2980b9;
 }
 

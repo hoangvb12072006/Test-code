@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chi Tiết Tin Tức - Hệ Thống Quản Lý</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        /* CSS viết gộp luôn ở đây cho lẹ, khỏi phải sửa file style.css */
+        .news-article { background: white; padding: 40px; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.05); margin-bottom: 40px; }
+        .news-article h1 { color: #2c3e50; margin-bottom: 15px; font-size: 28px; }
+        .news-meta { color: #7f8c8d; font-size: 14px; margin-bottom: 25px; border-bottom: 1px solid #ecf0f1; padding-bottom: 15px; }
+        .news-meta i { margin-right: 5px; }
+        .news-article img { width: 100%; max-height: 400px; object-fit: cover; border-radius: 10px; margin-bottom: 25px; }
+        .news-article p { line-height: 1.8; color: #444; margin-bottom: 15px; font-size: 16px; text-align: justify; }
+        .back-btn { display: inline-block; margin-bottom: 20px; color: #3498db; text-decoration: none; font-weight: bold; font-size: 16px; }
+        .back-btn:hover { text-decoration: underline; color: #2980b9; }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="logo">
+            <i class="fas fa-school"></i> TRƯỜNG CAO ĐẲNG KĨ THUẬT
+        </div>
+        <div class="menu">
+            <a href="index.html" class="nav-btn active"><i class="fas fa-home"></i> Trang Chủ</a>
+            <a href="gioithieu.html" class="nav-btn"><i class="fas fa-info-circle"></i> Thông Tin Khoa</a>
+            <a href="tracuudiem.html" class="nav-btn"><i class="fas fa-search"></i> Tra Cứu Điểm</a>
+        </div>
+    </nav>
+
+    <main class="container">
+        <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Quay lại Trang chủ</a>
+
+        <article id="bai1" class="news-article">
+            <h1>Khai giảng năm học mới 2026</h1>
+            <div class="news-meta">
+                <span><i class="fas fa-calendar-alt"></i> 05/09/2026</span> &nbsp;|&nbsp;
+                <span><i class="fas fa-user"></i> Đăng bởi: Admin HOANGKUN</span>
+            </div>
+            <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80" alt="Khai giảng">
+            <p>Sáng ngày 5/9, Trường Cao Đẳng Kĩ Thuật đã long trọng tổ chức Lễ khai giảng năm học 2026 - 2027. Buổi lễ diễn ra trong không khí hân hoan, phấn khởi với sự tham dự của toàn thể Ban Giám hiệu, giảng viên và hơn 1.500 tân sinh viên.</p>
+            <p>Phát biểu tại buổi lễ, Hiệu trưởng nhấn mạnh định hướng đào tạo gắn liền với thực tiễn, cam kết tạo mọi điều kiện tốt nhất để sinh viên phát triển toàn diện cả về kỹ năng chuyên môn lẫn kỹ năng mềm. Đặc biệt, năm nay trường đã nâng cấp toàn bộ hệ thống phòng máy tính thực hành cực kỳ hiện đại.</p>
+            <p>Buổi lễ kết thúc bằng những tiết mục văn nghệ đặc sắc do chính các bạn sinh viên chuẩn bị, hứa hẹn một năm học mới đầy bùng nổ và thành công.</p>
+        </article>
+
+        <article id="bai2" class="news-article">
+            <h1>Hội thao chào mừng ngày 26/3</h1>
+            <div class="news-meta">
+                <span><i class="fas fa-calendar-alt"></i> 20/03/2026</span> &nbsp;|&nbsp;
+                <span><i class="fas fa-user"></i> Đăng bởi: Đoàn Thanh Niên</span>
+            </div>
+            <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80" alt="Hội thao">
+            <p>Hòa chung không khí Tháng Thanh niên, trường Cao Đẳng Kĩ Thuật chính thức khởi động Hội thao sinh viên 2026. Đây là sân chơi rèn luyện thể chất, gắn kết tinh thần đồng đội cho toàn thể sinh viên các khoa.</p>
+            <p><strong>Các bộ môn thi đấu năm nay bao gồm:</strong></p>
+            <ul>
+                <li style="margin-left: 30px; line-height: 1.8;">Bóng đá nam / Bóng đá nữ (Sân cỏ nhân tạo).</li>
+                <li style="margin-left: 30px; line-height: 1.8;">Cầu lông (Đơn nam, đơn nữ, đôi nam nữ).</li>
+                <li style="margin-left: 30px; line-height: 1.8;">Kéo co tập thể (Giải thưởng lên đến 5.000.000 VNĐ).</li>
+            </ul>
+            <p style="margin-top: 15px;">Vòng bảng sẽ bắt đầu diễn ra từ ngày 22/3. Kính mời các bạn sinh viên đến cổ vũ nhiệt tình cho đội nhà tại Khu Liên hợp thể thao của trường!</p>
+        </article>
+
+        <article id="bai3" class="news-article">
+            <h1>Cuộc thi sáng tạo khoa học kỹ thuật</h1>
+            <div class="news-meta">
+                <span><i class="fas fa-calendar-alt"></i> 10/04/2026</span> &nbsp;|&nbsp;
+                <span><i class="fas fa-user"></i> Đăng bởi: CLB Khoa Học</span>
+            </div>
+            <img src="https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80" alt="Khoa học kỹ thuật">
+            <p>Nhằm khơi dậy niềm đam mê sáng tạo và nghiên cứu khoa học, trường Cao Đẳng Kĩ Thuật chính thức tổ chức cuộc thi "Sáng Tạo Kỹ Thuật 2026".</p>
+            <p>Năm nay, cuộc thi quy tụ hơn 50 dự án xuất sắc đến từ các nhóm sinh viên. Nổi bật nhất là các dự án ứng dụng công nghệ phần mềm vào quản lý giao thông, hệ thống tưới tiêu tự động, và xe dò line tự động.</p>
+            <p>Ban giám khảo đánh giá rất cao tính thực tiễn của các sản phẩm. Đội giành giải Nhất sẽ đại diện trường tham dự kỳ thi tay nghề cấp Quốc gia và nhận được phần thưởng trị giá 20 triệu đồng.</p>
+        </article>
+
+    </main>
+
+    <footer class="footer">
+        <div class="footer-bottom">
+            <p>&copy; 2026 Hệ thống quản lý trường học. Thiết kế và phát triển bởi HOANGKUN.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

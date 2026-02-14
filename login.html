@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Đăng Nhập - Hệ Thống Quản Lý Trường Học</title>
+    <title>Đăng Nhập - Hệ Thống Quản Lý</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
@@ -11,10 +11,11 @@
 
     <nav class="navbar">
         <div class="logo">
-            <i class="fas fa-school"></i> TRƯỜNG THPT HOÀNG KUN
+            <i class="fas fa-school"></i> TRƯỜNG CAO ĐẲNG KĨ THUẬT
         </div>
         <div class="menu">
             <a href="index.html" class="nav-btn"><i class="fas fa-home"></i> Trang Chủ</a>
+            <a href="tracuudiem.html" class="nav-btn"><i class="fas fa-search"></i> Tra Cứu Điểm</a>
             <a href="gioithieu.html" class="nav-btn"><i class="fas fa-info-circle"></i> Thông Tin</a>
             <a href="login.html" class="nav-btn active"><i class="fas fa-user"></i> Đăng Nhập/Đăng Ký</a>
             <a href="dashboard.html" class="nav-btn"><i class="fas fa-cogs"></i> Quản Lý</a>
@@ -28,41 +29,41 @@
                 <button class="toggle-btn" onclick="showRegister()">Đăng Ký</button>
             </div>
 
-            <form id="loginForm" class="auth-form">
+            <form id="loginForm" class="auth-form" onsubmit="handleLogin(event)">
                 <h2>Chào mừng trở lại!</h2>
                 <div class="input-group">
                     <i class="fas fa-user"></i>
-                    <input type="text" placeholder="Tên đăng nhập" required>
+                    <input type="text" id="loginUser" placeholder="Tên đăng nhập" required>
                 </div>
                 <div class="input-group">
                     <i class="fas fa-lock"></i>
-                    <input type="password" placeholder="Mật khẩu" required>
+                    <input type="password" id="loginPass" placeholder="Mật khẩu" required>
                 </div>
-                <button type="submit" class="auth-submit" onclick="window.location.href='dashboard.html'; return false;">Đăng Nhập</button>
+                <button type="submit" class="auth-submit">Đăng Nhập</button>
             </form>
 
-            <form id="registerForm" class="auth-form" style="display: none;">
+            <form id="registerForm" class="auth-form" style="display: none;" onsubmit="handleRegister(event)">
                 <h2>Tạo tài khoản mới</h2>
                 <div class="input-group">
                     <i class="fas fa-id-badge"></i>
-                    <input type="text" placeholder="Mã học sinh / Giáo viên" required>
+                    <input type="text" id="regId" placeholder="Mã HS/SV (VD: HS001)" required>
                 </div>
                 <div class="input-group">
                     <i class="fas fa-user"></i>
-                    <input type="text" placeholder="Tên đăng nhập" required>
+                    <input type="text" id="regUser" placeholder="Tên đăng nhập" required>
                 </div>
                 <div class="input-group">
                     <i class="fas fa-lock"></i>
-                    <input type="password" placeholder="Mật khẩu" required>
+                    <input type="password" id="regPass" placeholder="Mật khẩu" required>
                 </div>
-                <button type="submit" class="auth-submit" onclick="alert('Đăng ký thành công! Vui lòng đăng nhập.'); showLogin(); return false;">Đăng Ký</button>
+                <button type="submit" class="auth-submit">Đăng Ký</button>
             </form>
         </div>
     </main>
 
     <script src="script.js"></script>
     <script>
-        // Script nhỏ xử lý chuyển đổi qua lại giữa 2 form
+        // 1. Giao diện: Chuyển đổi qua lại giữa Đăng nhập & Đăng ký
         function showLogin() {
             document.getElementById('loginForm').style.display = 'block';
             document.getElementById('registerForm').style.display = 'none';
@@ -74,6 +75,55 @@
             document.getElementById('registerForm').style.display = 'block';
             document.querySelectorAll('.toggle-btn')[0].classList.remove('active');
             document.querySelectorAll('.toggle-btn')[1].classList.add('active');
+        }
+
+        // 2. Logic: Danh sách mã hợp lệ giả lập
+        const validIDs = ["HS001", "HS002", "HS003", "GV001", "GV002", "HOANGKUN"];
+
+        // 3. Logic: Xử lý Đăng ký
+        function handleRegister(event) {
+            event.preventDefault(); 
+            const studentId = document.getElementById('regId').value.trim().toUpperCase();
+            const username = document.getElementById('regUser').value.trim();
+            const pass = document.getElementById('regPass').value;
+
+            if (!validIDs.includes(studentId)) {
+                alert("❌ Mã số không hợp lệ! Vui lòng nhập đúng mã trường cấp.");
+                return;
+            }
+
+            let users = JSON.parse(localStorage.getItem('school_users')) || [];
+            
+            const isExist = users.find(u => u.studentId === studentId || u.username === username);
+            if (isExist) {
+                alert("⚠️ Mã số hoặc tên đăng nhập này đã được đăng ký!");
+                return;
+            }
+
+            users.push({ studentId, username, pass });
+            localStorage.setItem('school_users', JSON.stringify(users));
+            
+            alert("✅ Đăng ký thành công! Bạn có thể đăng nhập ngay.");
+            document.getElementById('registerForm').reset();
+            showLogin();
+        }
+
+        // 4. Logic: Xử lý Đăng nhập
+        function handleLogin(event) {
+            event.preventDefault();
+            const username = document.getElementById('loginUser').value.trim();
+            const pass = document.getElementById('loginPass').value;
+
+            let users = JSON.parse(localStorage.getItem('school_users')) || [];
+            const validUser = users.find(u => u.username === username && u.pass === pass);
+
+            if (validUser) {
+                alert("🎉 Đăng nhập thành công! Chào mừng " + username);
+                localStorage.setItem('currentUser', JSON.stringify(validUser)); 
+                window.location.href = 'dashboard.html'; 
+            } else {
+                alert("❌ Sai tên đăng nhập hoặc mật khẩu!");
+            }
         }
     </script>
 </body>

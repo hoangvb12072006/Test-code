@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tra Cứu Điểm Thi - Hệ Thống Quản Lý</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="logo">
+            <i class="fas fa-school"></i> TRƯỜNG CAO ĐẲNG KĨ THUẬT
+        </div>
+        <div class="menu">
+            <a href="index.html" class="nav-btn"><i class="fas fa-home"></i> Trang Chủ</a>
+            <a href="tracuudiem.html" class="nav-btn active"><i class="fas fa-search"></i> Tra Cứu Điểm</a>
+            <a href="login.html" class="nav-btn"><i class="fas fa-user"></i> Đăng Nhập/Đăng Ký</a>
+            <a href="dashboard.html" class="nav-btn"><i class="fas fa-cogs"></i> Quản Lý</a>
+        </div>
+    </nav>
+
+    <main class="container">
+        <section class="search-section">
+            <h2 class="section-title">Hệ Thống Tra Cứu Điểm Thi</h2>
+            <p style="color: #7f8c8d; margin-bottom: 20px;">Nhập mã học sinh của bạn để xem kết quả học tập mới nhất.</p>
+            
+            <div class="search-box">
+                <i class="fas fa-id-card search-icon"></i>
+                <input type="text" id="searchId" placeholder="Nhập mã học sinh (VD: HS001)...">
+                <button onclick="lookUpGrades()">Tra cứu ngay</button>
+            </div>
+
+            <div id="resultArea" class="result-area" style="display: none;">
+                </div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+    <script>
+        // Cơ sở dữ liệu điểm thi giả lập
+        const mockGrades = [
+            { id: "HS001", name: "Nguyễn Việt Hoàng", math: 9.5, lit: 8.0, eng: 9.0, tech: 10.0 },
+            { id: "HS002", name: "Trần Văn B", math: 7.0, lit: 6.5, eng: 8.0, tech: 7.5 },
+            { id: "HS003", name: "Lê Thị C", math: 8.5, lit: 9.0, eng: 7.5, tech: 8.0 }
+        ];
+
+        function lookUpGrades() {
+            const idInput = document.getElementById("searchId").value.trim().toUpperCase();
+            const resultArea = document.getElementById("resultArea");
+
+            // Nếu để trống
+            if (!idInput) {
+                resultArea.style.display = "block";
+                resultArea.innerHTML = '<p class="error-msg"><i class="fas fa-exclamation-triangle"></i> Vui lòng nhập mã học sinh!</p>';
+                return;
+            }
+
+            // Tìm học sinh trong database
+            const student = mockGrades.find(s => s.id === idInput);
+
+            if (student) {
+                // Tính điểm trung bình
+                const avg = ((student.math + student.lit + student.eng + student.tech) / 4).toFixed(1);
+                
+                // Hiển thị bảng kết quả
+                resultArea.style.display = "block";
+                resultArea.innerHTML = `
+                    <div class="student-info">
+                        <h3><i class="fas fa-user-graduate"></i> Học sinh: ${student.name}</h3>
+                        <p><strong>Mã HS:</strong> ${student.id}</p>
+                    </div>
+                    <table class="grade-table">
+                        <tr>
+                            <th>Môn Toán</th>
+                            <th>Môn Văn</th>
+                            <th>Ngoại Ngữ</th>
+                            <th>Công Nghệ</th>
+                            <th>Trung Bình</th>
+                        </tr>
+                        <tr>
+                            <td>${student.math}</td>
+                            <td>${student.lit}</td>
+                            <td>${student.eng}</td>
+                            <td>${student.tech}</td>
+                            <td class="highlight-grade">${avg}</td>
+                        </tr>
+                    </table>
+                `;
+            } else {
+                // Nếu nhập sai mã
+                resultArea.style.display = "block";
+                resultArea.innerHTML = '<p class="error-msg"><i class="fas fa-times-circle"></i> Không tìm thấy dữ liệu! Hãy kiểm tra lại mã học sinh.</p>';
+            }
+        }
+    </script>
+</body>
+</html>

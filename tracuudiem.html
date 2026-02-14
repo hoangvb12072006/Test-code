@@ -44,14 +44,14 @@
 
     <script src="script.js"></script>
     <script>
-        // Cơ sở dữ liệu 6 anh em
+        // Cơ sở dữ liệu 6 anh em ĐÃ THÊM NGÀY SINH (dob)
         const mockGrades = [
-            { id: "24Q6410005", name: "Nguyễn Việt Hoàng", math: 9.5, lit: 8.0, eng: 9.0, tech: 10.0 },
-            { id: "242Q6410001", name: "Nguyễn Đăng Hoàng", math: 8.0, lit: 7.5, eng: 8.5, tech: 9.0 },
-            { id: "242Q6410002", name: "Phạm Việt Hoàng", math: 7.5, lit: 8.0, eng: 7.0, tech: 8.5 },
-            { id: "242Q6410006", name: "Lê Huy Tài", math: 8.5, lit: 9.0, eng: 8.5, tech: 9.5 },
-            { id: "242Q6410004", name: "Nguyễn Hữu Đức", math: 9.0, lit: 8.5, eng: 9.5, tech: 9.0 },
-            { id: "242Q6410008", name: "Bùi Đức Duy", math: 8.0, lit: 8.0, eng: 8.0, tech: 8.5 }
+            { id: "24Q6410005", name: "Nguyễn Việt Hoàng", dob: "12/07/2006", math: 9.5, lit: 8.0, eng: 9.0, tech: 10.0 },
+            { id: "242Q6410001", name: "Nguyễn Đăng Hoàng", dob: "01/10/2005", math: 8.0, lit: 7.5, eng: 8.5, tech: 9.0 },
+            { id: "242Q6410002", name: "Phạm Việt Hoàng", dob: "29/10/2006", math: 7.5, lit: 8.0, eng: 7.0, tech: 8.5 },
+            { id: "242Q6410006", name: "Lê Huy Tài", dob: "13/03/2006", math: 8.5, lit: 9.0, eng: 8.5, tech: 9.5 },
+            { id: "242Q6410004", name: "Nguyễn Hữu Đức", dob: "16/08/2006", math: 9.0, lit: 8.5, eng: 9.5, tech: 9.0 },
+            { id: "242Q6410008", name: "Bùi Đức Duy", dob: "Đang cập nhật", math: 8.0, lit: 8.0, eng: 8.0, tech: 8.5 }
         ];
 
         function lookUpGrades() {
@@ -69,11 +69,15 @@
             if (student) {
                 const avg = ((student.math + student.lit + student.eng + student.tech) / 4).toFixed(1);
                 
+                // Form hiển thị kết quả ĐÃ BỔ SUNG NGÀY SINH
                 resultArea.style.display = "block";
                 resultArea.innerHTML = `
                     <div class="student-info">
                         <h3><i class="fas fa-user-graduate"></i> Sinh viên: ${student.name}</h3>
-                        <p><strong>Mã SV:</strong> ${student.id}</p>
+                        <p style="margin-top: 10px; font-size: 16px; color: #2c3e50;">
+                            <strong><i class="fas fa-id-badge"></i> Mã SV:</strong> ${student.id} &nbsp;|&nbsp; 
+                            <strong><i class="fas fa-calendar-alt"></i> Ngày sinh:</strong> ${student.dob}
+                        </p>
                     </div>
                     <table class="grade-table">
                         <tr>

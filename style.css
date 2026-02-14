@@ -275,3 +275,104 @@ body {
     padding: 20px;
     font-size: 0.9em;
 }
+
+/* =========================================
+   GIAO DIỆN TRANG ĐĂNG NHẬP / ĐĂNG KÝ
+   ========================================= */
+.auth-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh; /* Chiều cao chiếm 80% màn hình để căn giữa */
+    padding: 20px;
+}
+
+.auth-box {
+    background: white;
+    width: 100%;
+    max-width: 400px;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1); /* Hiệu ứng nổi 3D */
+}
+
+/* Nút bấm chuyển đổi */
+.auth-toggle {
+    display: flex;
+    margin-bottom: 25px;
+    background: #ecf0f1;
+    border-radius: 30px;
+    overflow: hidden;
+}
+
+.toggle-btn {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    background: transparent;
+    font-size: 16px;
+    font-weight: bold;
+    color: #7f8c8d;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.toggle-btn.active {
+    background: #3498db;
+    color: white;
+    box-shadow: 0 0 10px rgba(52, 152, 219, 0.5);
+}
+
+/* Kiểu dáng Form và Ô nhập liệu */
+.auth-form h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #2c3e50;
+}
+
+.input-group {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.input-group i {
+    position: absolute;
+    top: 50%;
+    left: 15px;
+    transform: translateY(-50%);
+    color: #95a5a6;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px 15px 12px 40px; /* Chừa chỗ cho icon */
+    border: 1px solid #bdc3c7;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: 0.3s;
+}
+
+.input-group input:focus {
+    border-color: #3498db;
+    outline: none;
+    box-shadow: 0 0 8px rgba(52, 152, 219, 0.3); /* Phát sáng viền khi click vào */
+}
+
+.auth-submit {
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+    margin-top: 10px;
+}
+
+.auth-submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+}
